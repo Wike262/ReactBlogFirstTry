@@ -2,17 +2,17 @@ import React, { Component } from 'react'
 import NavLink from './NavigationLink';
 import './Navigation.sass';
 
-const Nav = () => {
+const Nav = (props) => {
  return (
-  <div className="Menu-NavigationWrapper">
-   <ul className="Menu-Navigation">
-    <NavLink text="Home" />
-    <NavLink text="Photography" />
-    <NavLink text="Travel" />
-    <NavLink text="Fashion" />
-    <NavLink text="About" />
-    <NavLink text="Contact" />
+  <div className='Navigation-Wrapper'>
+   {props.title &&
+    <div className={'Navigation-Title Navigation-Title-' + props.mod}><h3>{props.title}</h3></div>
+   }
 
+   <ul className={'Navigation Navigation-' + props.mod} >
+    {props.links.map((links, i) =>
+     <NavLink key={i} text={links.text} link={links.link} mod={props.mod} count={links.count} />
+    )}
    </ul>
   </div>
  )

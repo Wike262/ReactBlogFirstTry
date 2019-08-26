@@ -1,0 +1,59 @@
+@import '../var'
+.Header
+ height: 100vh
+ position: relative
+ z-index: 0
+.Overlay
+ position: absolute
+ top: 0
+ left: 0
+ right: 0
+ bottom: 0
+ content: ''
+ opacity: .7
+ background: #fff
+ z-index: -1
+.Profile
+ padding-top: 50px
+ display: flex
+ justify-content: center
+ align-items: center
+ flex-direction: column
+ z-index: 1
+ .Avatar
+  margin-bottom: 45px
+ .Hello
+  padding-bottom: 36px
+ .Name
+  h1
+   font-size: 40px
+   padding-bottom: 36px
+   font-weight: 700
+ .Link
+  cursor: pointer
+  color: $PCG
+  font-size: 18px
+  font-weight: 400
+  border-bottom: 2px solid #b3b3b3
+  transition: all .3s ease
+  &:hover
+   color: $PC
+   border-color: $PC
+.Avatar
+ max-width: 250px
+ max-height: 250px
+ img
+  border-radius: 50% 
+  width: 100%
+  height: 100%
+.Hello
+ color: $PCG
+ font-size: 24px
+.Description
+ color: $PCG
+ max-width: 650px
+ font-size: 18px
+ line-height: 32px
+ text-align: center
+ font-weight: 500
+ padding-bottom: 36px
