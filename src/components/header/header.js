@@ -5,7 +5,7 @@ import './header.sass';
 
 const header = (props) => {
  return (
-  <div className="Header container" style={{ background: 'url(' + Backgroud + ') 100% 100%' }}>
+  <div className="Header " style={{ background: 'url(' + Backgroud + ') 100% 100%', backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}>
    <div className="Overlay"></div>
    <div className="Header-Wrapper Profile row">
     <div className="Profile-Avatar Avatar"><img src={props.img} alt="" /></div>
