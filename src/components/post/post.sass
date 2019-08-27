@@ -1,5 +1,6 @@
 @import '../var'
 .Post
+ margin: 3em 0
  &-Image
   img
    width: 100%
@@ -26,10 +27,16 @@
    color: #000000
    transition: all .3s ease
    h1
+    overflow: hidden
+    text-overflow: ellipsis
+    display: -webkit-box
+    line-height: 33px
+    max-height: 100px
+    -webkit-line-clamp: 3
+    -webkit-box-orient: vertical
     font-size: 22px
     font-weight: 800
     text-transform: capitalize
-    line-height: 33px
     transition: all .3s ease
    &:hover
     a
@@ -37,8 +44,21 @@
     h1
      color: $PC
  &-Description
+  margin-bottom: 1.5em 
   p
    font-size: 15px
    line-height: 1.8
    font-weight: 500
    color: $PCG
+ &-Date
+  margin-left: 15px
+ &-AuthorDateWrapper
+  display: flex
+  align-items: flex-end
+ &-Link
+  a
+   display: block
+   letter-spacing: 1px
+   color: $PC
+   text-transform: uppercase
+   padding-bottom: 1.5em

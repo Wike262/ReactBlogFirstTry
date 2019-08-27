@@ -1,5 +1,6 @@
 import React from 'react';
 import Author from '../author/author'
+import Statistic from '../statistic/statistic'
 import post1 from '../../Img/image_1.webp'
 import post2 from '../../Img/image_2.webp'
 import post3 from '../../Img/image_3.webp'
@@ -207,22 +208,16 @@ const post = (props) => {
     <div className='Post-Description'>
      <p>{posts[id].description}</p>
     </div>
-    <div className='Post-Author'>
-     <Author id={posts[id].authorID} />
-    </div>
-    <div className='Post-Date'>
-     <p>{posts[id].date}</p>
+    <div className="Post-AuthorDateWrapper">
+     <div className='Post-Author'>
+      <Author id={posts[id].authorID} />
+     </div>
+     <div className='Post-Date'>
+      <p>{posts[id].date}</p>
+     </div>
     </div>
     <div className='Post-Statistic'>
-     <div className='Statistic-Likes'>
-      <p></p>
-     </div>
-     <div className='Statistic-View'>
-      <p></p>
-     </div>
-     <div className='Statistic-Comment'>
-      <p></p>
-     </div>
+     <Statistic likes={posts[id].likes} view={posts[id].view} comment={posts[id].comments} />
     </div>
     <div className='Post-Link'>
      <a href={posts[id].link}>Continue reading ></a>
