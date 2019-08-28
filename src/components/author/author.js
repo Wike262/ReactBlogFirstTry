@@ -3,6 +3,7 @@ import author1 from '../../Img/author_1.webp'
 import author2 from '../../Img/author_2.webp'
 import author3 from '../../Img/author_3.webp'
 import './author.sass'
+import './author-mobile.sass'
 
 const authors = [
   {

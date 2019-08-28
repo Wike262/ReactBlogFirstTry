@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Navigation from '../menu/Navigation/Navigation'
 import Info from '../info/info'
 import './footer.sass';
+import './footer-mobile.sass';
 
 const footer = () => {
  const lin = [

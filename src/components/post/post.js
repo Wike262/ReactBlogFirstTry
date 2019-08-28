@@ -15,6 +15,7 @@ import post11 from '../../Img/image_11.webp'
 import post12 from '../../Img/image_12.webp'
 
 import './post.sass'
+import './post-mobile.sass'
 
 const posts =
  [

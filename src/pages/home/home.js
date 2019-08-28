@@ -4,13 +4,13 @@ import Header from '../../components/header/header'
 import Footer from '../../components/footer/footer'
 import Post from '../../components/post/post'
 import '../page.sass'
+import '../page-mobile.sass'
 
 const posts = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
 const Home = () => {
  return (
-  <div className='Page-Home Page'>
-   <Menu />
+  <div className='Page-Home'>
    <div className='Content'>
     <Header />
     <div className='Section-Wrapper Articles container'>

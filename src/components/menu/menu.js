@@ -1,40 +1,45 @@
-import React, { Component } from 'react'
-import Logo from '../../Img/dotblog.png'
+import React from 'react';
+import { FaBars } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
+import Logo from '../../Img/dotblog.png';
+import Copyrights from '../copyrights/copyrights';
+import Social from '../social/social';
+import './menu.sass';
+import './menu-mobile.sass';
 import Navigation from './Navigation/Navigation';
-import Copyrights from '../copyrights/copyrights'
-import Social from '../social/social'
-import './menu.sass'
 
 const Menu = () => {
  const lin = [
   {
-   link: '#',
+   link: '/',
    text: 'Home'
   },
   {
-   link: '#',
+   link: '/tag/photography',
    text: 'Photography'
   },
   {
-   link: '#',
+   link: '/tag/travel',
    text: 'Travel'
   },
   {
-   link: '#',
+   link: '/tag/fashion',
    text: 'Fashion'
   },
   {
-   link: '#',
+   link: '/about',
    text: 'About'
   },
   {
-   link: '#',
+   link: '/contact',
    text: 'Contact'
   }
  ]
  return (
   <React.Fragment>
-   <div className='Menu'>
+   <button onClick={handleClick} className="Menu-Mobile-Switcher"><FaBars /></button>
+   <div className='Menu Menu-mobile-close'>
+    <button onClick={handleClick} className="Menu-Mobile-Close"><FaTimes /></button>
     <div className='Menu-WrapperMenu'>
      <div className='Menu-Logo'><a href='#'><img src={Logo} alt='Logotype' /></a></div>
      <Navigation mod='menu-right' links={lin} />
@@ -47,5 +52,15 @@ const Menu = () => {
   </React.Fragment>
  )
 }
-
+function handleClick() {
+ var menu = document.querySelector('.Menu');
+ if (menu.classList.contains('Menu-mobile-close')) {
+  menu.classList.remove('Menu-mobile-close');
+  menu.classList.add('Menu-mobile-open');
+ }
+ else {
+  menu.classList.remove('Menu-mobile-open');
+  menu.classList.add('Menu-mobile-close');
+ }
+}
 export default Menu;
