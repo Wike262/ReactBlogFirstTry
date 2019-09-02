@@ -5,6 +5,7 @@ import './index.sass';
 import Menu from './components/menu/menu'
 import Home from './pages/home/home'
 import About from './pages/about/about'
+import Contact from './pages/contact/contact'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import * as serviceWorker from './serviceWorker';
 
@@ -14,6 +15,7 @@ ReactDOM.render(
   <div className="Page">
    <Route exact path='/' component={Home} />
    <Route path='/about' component={About} />
+   <Route path='/contact' component={Contact} />
   </div>
  </Router>,
  document.getElementById('root'));

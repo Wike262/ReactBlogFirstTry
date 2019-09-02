@@ -1,5 +1,4 @@
 import React from 'react';
-import Menu from '../../components/menu/menu'
 import Header from '../../components/header/header'
 import Footer from '../../components/footer/footer'
 import Post from '../../components/post/post'

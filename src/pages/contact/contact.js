@@ -1,14 +1,15 @@
 import React from 'react';
-import Header from '../../components/header/header'
-import Background from '../../Img/author.webp'
+import Footer from '../../components/footer/footer'
+import Info from '../../components/info/info'
 import '../page.sass'
 import '../page-mobile.sass'
 
 const about = () => {
  return (
-  <div className="Page-About">
+  <div className="Page-Contact">
    <div className="Content">
-    <Header mod='about' backgroundImg={Background} />
+    <Info />
+    <Footer />
    </div>
   </div>
  )

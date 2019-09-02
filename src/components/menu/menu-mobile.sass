@@ -1,20 +1,3 @@
-@media screen and (max-width: 576px) 
- .Menu
-  transition: all .3s ease
-  background: #ffffff
-  &-mobile-close
-  left: -100%
-  width: 100vw
-  display: block
-  z-index: 3
-  visibility: visible
-  &-mobile-open
-   position: absolute
-   top: 0
-   left: 0
-   bottom: 0
-   right: 0
-   visibility: visible
 .Menu
  &-Mobile-Switcher,&-Mobile-Close
   visibility: hidden
@@ -28,3 +11,22 @@
   font-size: 30px
  &-Mobile-Close
   position: relative
+@media screen and (max-width: 576px) 
+ .Menu
+  transition: all .3s ease
+  background: #ffffff
+  &-mobile-close
+  left: -100%
+  width: 100vw
+  display: block
+  z-index: 3
+  visibility: visible
+  &-Mobile-Switcher,&-Mobile-Close
+   visibility: visible
+  &-mobile-open
+   position: fixed
+   top: 0
+   left: 0
+   bottom: 0
+   right: 0
+   visibility: visible
