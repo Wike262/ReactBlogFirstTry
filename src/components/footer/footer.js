@@ -7,50 +7,50 @@ import './footer-mobile.sass';
 const footer = () => {
  const lin = [
   {
-   link: '#',
+   link: '/tag/photography',
    text: 'Photography',
    count: '6'
   },
   {
-   link: '#',
+   link: '/tag/fashion',
    text: 'Fashion',
    count: '8'
   },
   {
-   link: '#',
+   link: '/tag/technology',
    text: 'Technology',
    count: '2'
   },
   {
-   link: '#',
+   link: '/tag/travel',
    text: 'Travel',
    count: '2'
   }
  ];
  const arch = [
   {
-   link: '#',
+   link: '/archive/10.2018',
    text: 'October 2018',
    count: '6'
   },
   {
-   link: '#',
+   link: '/archive/09.2018',
    text: 'Semptember 2018',
    count: '6'
   },
   {
-   link: '#',
+   link: '/archive/08.2018',
    text: 'August 2018',
    count: '8'
   },
   {
-   link: '#',
-   text: 'July',
+   link: '/archive/07.2018',
+   text: 'July 2018',
    count: '2'
   },
   {
-   link: '#',
-   text: 'June',
+   link: '/archive/06.2018',
+   text: 'June 2018',
    count: '7'
   }
  ];
@@ -68,7 +68,7 @@ const footer = () => {
       <div className="Info-Title">
        <h3>Have a Questions?</h3>
       </div>
-      <Info />
+      <Info mod='Footer' />
      </div>
     </div>
    </div>
