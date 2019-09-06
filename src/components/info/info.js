@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { IconContext } from 'react-icons';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { FaPhone } from 'react-icons/fa';
@@ -7,13 +7,12 @@ import './info.sass'
 
 function ModificationEqual(modification1, modification2) {
  if (modification1 && modification2) {
-  if (modification1.toString().toLowerCase() == modification2.toString().toLowerCase()) {
+  if (modification1.toString().toLowerCase() === modification2.toString().toLowerCase()) {
    return true;
   }
   else return false
  }
  else return false
- return false
 }
 
 const info = (props) => {
@@ -28,7 +27,7 @@ const info = (props) => {
       </div>
      </IconContext.Provider> : ''}
      <span>{ModificationEqual(mod, 'contact') ? 'Adres: ' : ''}</span>
-     203 Fake St. Mountain View, San Francisco, California, USA></li>
+     203 Fake St. Mountain View, San Francisco, California, USA</li>
     <li className={'Info-Tepelhone' + (ModificationEqual(mod, 'contact') ? ' col-xl-4 col-md-6 col-12' : '')}>
      {ModificationEqual(mod, 'footer') ? <IconContext.Provider value={{ color: '#ffffff', style: { width: '40px' } }}>
       <div>

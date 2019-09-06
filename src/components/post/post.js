@@ -191,7 +191,7 @@ const posts =
 
 const post = (props) => {
  const id = props.id;
- const modificClass = props.modClass == undefined ? ' col-xl-4 col-md-6 col-12' : props.modClass;
+ const modificClass = props.modClass === undefined ? ' col-xl-4 col-md-6 col-12' : props.modClass;
  return (
   <article className={'Post-Wrapper' + modificClass}>
    <div className='Post'>
@@ -224,7 +224,7 @@ const post = (props) => {
      <a href={posts[id].link}>Continue reading ></a>
     </div>
    </div>
-  </article >
+  </article>
  )
 }
 

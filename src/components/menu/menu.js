@@ -15,7 +15,7 @@ const Menu = () => {
    text: 'Home'
   },
   {
-   link: '/tag/photography',
+   link: '/photography',
    text: 'Photography'
   },
   {
@@ -41,7 +41,7 @@ const Menu = () => {
    <div className='Menu Menu-mobile-close'>
     <button onClick={handleClick} className="Menu-Mobile-Close"><FaTimes /></button>
     <div className='Menu-WrapperMenu'>
-     <div className='Menu-Logo'><a href='#'><img src={Logo} alt='Logotype' /></a></div>
+     <div className='Menu-Logo'><a href='/'><img src={Logo} alt='Logotype' /></a></div>
      <Navigation mod='menu-right' links={lin} />
      <div className='Menu-BottomInfomation'>
       <Copyrights />

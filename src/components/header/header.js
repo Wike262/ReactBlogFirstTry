@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { Link } from 'react-router-dom'
 import AvatarPhoto from '../../Img/author.webp'
 import Background from '../../Img/bg_1.webp'
 import Social from '../social/social'
@@ -20,7 +21,7 @@ const header = (props) => {
     <div className='Profile-Description Description'>
      <p>{props.description}</p>
     </div>
-    {props.mod == 'about' ? <Social mod='about' /> : <div className='Profile-Link Link'><a href={props.profile}>More about me ></a></div>}
+    {props.mod === 'about' ? <Social mod='about' /> : <div className='Profile-Link Link'><Link to={props.profileLink}>More about me ></Link></div>}
    </div>
   </div>
  )
@@ -28,6 +29,7 @@ const header = (props) => {
 }
 
 header.defaultProps = {
+ profileLink: '/about',
  name: 'Elen Henderson',
  img: AvatarPhoto,
  description: 'I am A Blogger Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.'

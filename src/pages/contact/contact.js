@@ -18,10 +18,10 @@ const about = () => {
      </div>
     </div>
     <Info mod='Contact' />
-    <div className='container'>
+    <div className='container mb-5 pb-5'>
      <div className='row'>
       <div className='Page-Map col-lg-6 col-12'>
-       <iframe src='https://yandex.ru/map-widget/v1/?um=constructor%3A912b77231291fc995ec61bedf8e62b4014b1bd8d6e05ff4966133a90195e45ab&amp;source=constructor' width='100%' height='400' frameborder='0'></iframe>
+       <iframe title='Contact map iframe' src='https://yandex.ru/map-widget/v1/?um=constructor%3A912b77231291fc995ec61bedf8e62b4014b1bd8d6e05ff4966133a90195e45ab&amp;source=constructor' width='100%' height='400' frameBorder='0'></iframe>
       </div>
       <div className='Page-Callback col-lg-6 col-12'>
        <Callback />

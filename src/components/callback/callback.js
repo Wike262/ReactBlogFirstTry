@@ -4,12 +4,13 @@ import './callback.sass'
 
 const callback = () => {
  return (
-  <div className='callback'>
+  <form className='Callback'>
    <Input placeholder='Your Name' />
    <Input type='email' placeholder='Your Email' />
    <Input placeholder='Your Subject' />
    <Input type='textarea' placeholder='Message' />
-  </div>
+   <button className='Callback-Button Button Button-Submit'>Send message</button>
+  </form>
  )
 }
 

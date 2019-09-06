@@ -1,43 +1,46 @@
-import React from 'react';
-import author1 from '../../Img/author_1.webp'
-import author2 from '../../Img/author_2.webp'
-import author3 from '../../Img/author_3.webp'
+import React, { Component } from 'react';
 import './author.sass'
 import './author-mobile.sass'
+import { Link } from 'react-router-dom'
+import * as firebase from 'firebase/app';
+import 'firebase/firebase-firestore'
+import { send } from 'q';
 
-const authors = [
-  {
-    id: '0',
-    name: 'Dave Lewis',
-    link: '#',
-    avatar: author1
-  },
-  {
-    id: '1',
-    name: 'Dave Lewis',
-    link: '#',
-    avatar: author2
-  },
-  {
-    id: '2',
-    name: 'Dave Lewis',
-    link: '#',
-    avatar: author3
+firebase.initializeApp({
+ apiKey: 'AIzaSyAjyavp9xjnfj6mXmb9GfuQlSx64xaVl_Q',
+ authDomain: 'my-app-dd6a6.firebaseapp.com',
+ projectId: 'my-app-dd6a6',
+})
+let db = firebase.firestore();
+
+class Author extends React.Component {
+ constructor(props) {
+  super(props)
+  this.state = {
+   author: {}
   }
-]
-
-const author = (props) => {
-  const authorID = props.id;
-
+ }
+ componentWillMount() {
+  db.collection("authors").get().then((querySnapshot) => {
+   querySnapshot.forEach((doc) => {
+    this.setState({
+     author: doc.data()
+    })
+    console.log(this.state.author)
+   });
+  });
+ }
+ render() {
   return (
-    <a className='Author' href={authors[authorID].link}>
-      <div className='Author-Avatar'><img src={authors[authorID].avatar} alt='' /></div>
-      <div className='Author-Name'>
-        <p>Written by</p>
-        <h2>{authors[authorID].name},</h2>
-      </div>
-    </a>)
+   <Link className='Author' to={'/authors/'} >
+    <div className='Author-Avatar'><img src={this.state.author.avatar} alt='' /></div>
+    <div className='Author-Name'>
+     <p>Written by</p>
+     <h2>{this.state.author.name} ,</h2>
+    </div>
+   </Link>
+  )
+ }
 }
 
-
-export default author;
+export default Author;
