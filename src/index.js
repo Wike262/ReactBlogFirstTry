@@ -6,9 +6,11 @@ import Menu from './components/menu/menu'
 import Home from './pages/home/home'
 import About from './pages/about/about'
 import Contact from './pages/contact/contact'
+import Login from './components/login/login'
+import AccountDetails from './components/login/login-account-details'
+import error from './components/404/404'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-import * as firebase from 'firebase/app';
 
 const config = {
  apiKey: 'AIzaSyAjyavp9xjnfj6mXmb9GfuQlSx64xaVl_Q',
@@ -27,6 +29,9 @@ ReactDOM.render(
    <Route exact path='/' component={Home} />
    <Route path='/about' component={About} />
    <Route path='/contact' component={Contact} />
+   <Route path='/login' component={Login} />
+   <Route path='/account-details' component={AccountDetails} />
+   <Route component={error} />
   </div>
  </Router>,
  document.getElementById('root'));

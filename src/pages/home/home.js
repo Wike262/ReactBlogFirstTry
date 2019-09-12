@@ -5,7 +5,7 @@ import Post from '../../components/post/post'
 import '../page.sass'
 import '../page-mobile.sass'
 
-const posts = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+const posts = [0]
 
 const Home = () => {
  return (
@@ -20,7 +20,7 @@ const Home = () => {
       <div className='Section-Description col-12'>
        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country.</p>
       </div>
-      {posts.map((post, i) => <Post key={i} id={post} />)}
+      {posts.map((post, i) => <Post key={i} postID={post} />)}
      </div>
     </div>
     <Footer />

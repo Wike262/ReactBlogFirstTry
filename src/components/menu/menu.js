@@ -2,7 +2,7 @@ import React from 'react';
 import { FaBars } from "react-icons/fa";
 import { FaTimes } from "react-icons/fa";
 import Logo from '../../Img/dotblog.png';
-import Copyrights from '../copyrights/copyrights';
+import LoginStatus from '../login/login-status';
 import Social from '../social/social';
 import './menu.sass';
 import './menu-mobile.sass';
@@ -44,7 +44,7 @@ const Menu = () => {
      <div className='Menu-Logo'><a href='/'><img src={Logo} alt='Logotype' /></a></div>
      <Navigation mod='menu-right' links={lin} />
      <div className='Menu-BottomInfomation'>
-      <Copyrights />
+      <LoginStatus />
       <Social />
      </div>
     </div>
