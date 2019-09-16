@@ -8,7 +8,10 @@ const input = (props) => {
  const name = props.name === undefined ? '' : props.name;
  const id = props.id === undefined ? '' : props.id;
  return (
-  textArea ? <textarea className='Callback-Input TextArea' id={id} name={name} placeholder={placeholder}></textarea> : <input className='Callback-Input Input' id={id} name={name} type={type} placeholder={placeholder}></input>
+  textArea ?
+   <textarea className='Callback-Input TextArea' id={id} name={name} placeholder={placeholder}></textarea>
+   :
+   <input className='Callback-Input Input' id={id} name={name} type={type} placeholder={placeholder}></input>
  )
 }
 

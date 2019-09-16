@@ -9,7 +9,8 @@ import Contact from './pages/contact/contact'
 import Login from './components/login/login'
 import AccountDetails from './components/login/login-account-details'
 import error from './components/404/404'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import about from './pages/about/about';
 
 
 const config = {
@@ -26,12 +27,15 @@ ReactDOM.render(
  <Router>
   <Menu />
   <div className='Page'>
-   <Route exact path='/' component={Home} />
-   <Route path='/about' component={About} />
-   <Route path='/contact' component={Contact} />
-   <Route path='/login' component={Login} />
-   <Route path='/account-details' component={AccountDetails} />
-   <Route component={error} />
+   <Switch>
+    <Route exact path='/' component={Home} />
+    <Route path='/about' component={About} />
+    <Route path='/contact' component={Contact} />
+    <Route path='/account-details' component={AccountDetails} />
+    <Route path='/login' component={Login} />
+    <Route path={`/:id`} component={about} />
+    <Route component={error} />
+   </Switch>
   </div>
  </Router>,
  document.getElementById('root'));

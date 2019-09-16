@@ -5,42 +5,71 @@ import * as firebaseui from 'firebaseui';
 import 'firebaseui/dist/firebaseui.css';
 import Input from '../callback/input/input'
 
-const LoginStatus = () => {
- firebase.initApp = function () {
-  firebase.auth().onAuthStateChanged(function (user) {
-   if (user) {
-    // User is signed in.
-    var displayName = user.displayName;
-    var email = user.email;
-    var emailVerified = user.emailVerified;
-    var photoURL = user.photoURL;
-    var uid = user.uid;
-    var phoneNumber = user.phoneNumber;
-    var providerData = user.providerData;
-    user.getIdToken().then(function (accessToken) {
-     document.getElementById('Name').textContent = displayName
-    });
-   } else {
-   }
-  }, function (error) {
-   console.log(error);
+class LoginStatus extends React.Component {
+ constructor(props) {
+  super(props)
+  this.state = {
+   Name: '',
+   LastName: '',
+   Email: '',
+   Avatar: '',
+   Phone: ''
+  }
+ }
+ componentDidMount() {
+  firebase.initApp = () => {
+   firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+     this.setState({
+      Name: user.displayName.split(' ')[0],
+      LastName: user.displayName.split(' ')[1],
+      Email: user.email
+     })
+     var emailVerified = user.emailVerified;
+     var photoURL = user.photoURL;
+     var uid = user.uid;
+     var phoneNumber = user.phoneNumber;
+     var providerData = user.providerData;
+     user.getIdToken().then((accessToken) => {
+      document.getElementById('Name').value = this.state.Name
+      document.getElementById('LastName').value = this.state.LastName
+      document.getElementById('ResetPassword').addEventListener('click', () => {
+       firebase.auth().sendPasswordResetEmail(this.state.Email).then(() => {
+
+       }).catch(function (error) {
+        console.log(error)
+       })
+      })
+     });
+    } else {
+    }
+   }, function (error) {
+    console.log(error);
+   });
+  };
+  window.addEventListener('load', function () {
+   firebase.initApp();
   });
- };
-
- window.addEventListener('load', function () {
-  firebase.initApp();
- });
- return (
-  <div className="Account-Detail">
-   <h1>Welcome</h1>
-   <p>To continue please fill fields</p>
-   <div className="Account-Name">
-    <label htmlFor="name">Name:</label>
-    <Input name='Name' id='Name' placeholder='First Name' />
+ }
+ render() {
+  return (
+   <div className='Account-Detail' >
+    <h1>Welcome</h1>
+    <p>To continue please fill fields</p>
+    <div className='Account-Name'>
+     <label htmlFor='Name'>Name:</label>
+     <Input name='Name' id='Name' placeholder='First Name' />
+     <label htmlFor='LastName'>Last-Name:</label>
+     <Input name='LastName' id='LastName' placeholder='Last Name' />
+     <label htmlFor='Email'>E-mail:</label>
+     <Input name='Email' id='Email' placeholder='E-Mail' />
+     <Input name='Avatar' id='Avatar' type='file' />
+     <button className='Buttom-ResetPassword Button' id='ResetPassword'>Reset password</button>
+    </div>
    </div>
-  </div>
+  )
+ }
 
- )
 }
 
 export default LoginStatus;
