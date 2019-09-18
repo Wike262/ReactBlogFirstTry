@@ -25,11 +25,6 @@ class LoginStatus extends React.Component {
       LastName: user.displayName.split(' ')[1],
       Email: user.email
      })
-     var emailVerified = user.emailVerified;
-     var photoURL = user.photoURL;
-     var uid = user.uid;
-     var phoneNumber = user.phoneNumber;
-     var providerData = user.providerData;
      user.getIdToken().then((accessToken) => {
       document.getElementById('Name').value = this.state.Name
       document.getElementById('LastName').value = this.state.LastName

@@ -15,8 +15,8 @@ const social = (props) => {
      <li className={'Social-Link' + (!!props.mod ? ' Social-Link-' + props.mod : '')}><a href='https://www.instagram.com/?hl=ru'><FaInstagram /></a></li>
      <li className={'Social-Link' + (!!props.mod ? ' Social-Link-' + props.mod : '')}><a href='https://ru.linkedin.com'><FaLinkedinIn /></a></li>
     </ul>
-   </div >
-  </div >
+   </div>
+  </div>
 
  )
 }

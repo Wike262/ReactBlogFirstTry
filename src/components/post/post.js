@@ -1,7 +1,9 @@
 import React from 'react';
 import Author from '../author/author'
 import Statistic from '../statistic/statistic'
+import ClipLoader from 'react-spinners/ClipLoader';
 import * as firebase from 'firebase/app';
+import * as functions from 'firebase/firebase-functions'
 import 'firebase/firebase-firestore'
 import './post.sass'
 import './post-mobile.sass'
@@ -13,14 +15,13 @@ firebase.initializeApp({
 })
 let db = firebase.firestore();
 
-
-
 class Post extends React.Component {
  constructor(props) {
   super(props)
   this.state = {
    post: {},
-   author: {}
+   author: {},
+   Loading: true
   }
  }
 
@@ -31,51 +32,71 @@ class Post extends React.Component {
     this.setState({
      post: docPost.data()
     })
-    db.collection('authors')
-     .doc('' + this.state.post.authorID)
-     .get().then((docAuthor) => {
+    fetch('http://localhost:5000/my-app-dd6a6/us-central1/author?id=' + this.state.post.authorID)
+     .then((response) => {
+      return response.json()
+     })
+     .then((response) => {
+      console.log(response)
       this.setState({
-       author: docAuthor.data()
+       author: response,
+       Loading: false
       })
      })
    });
  }
 
  render() {
-  const modificClass = this.props.modClass === undefined ? ' col-xl-4 col-md-6 col-12' : this.props.modClass;
+  const modificClass = !!this.props.modClass ? this.props.modClass : ' col-xl-4 col-md-6 col-12';
   return (
    <article className={'Post-Wrapper' + modificClass}>
     <div className='Post'>
-     <div className='Post-Image'>
-      <a href={'/posts/' + this.props.postID}>
-       <img src={this.state.post.img} alt='' />
-      </a>
-     </div>
-     <div className='Post-Tag'>
-      {this.state.post.tag instanceof Array ? this.state.post.tag.map((tag, i) => <a key={tag} href={this.state.post.tagLink[i]}>{this.state.post.tag[i]}{i === this.state.post.tag.length - 1 ? '' : ', '}</a>) : <a href={this.state.post.tagLink}>{this.state.post.tag}</a>}
-     </div>
-     <div className='Post-Title'>
-      <a href={'/posts/' + this.props.postID}><h1>{this.state.post.title}</h1></a>
-     </div>
-     <div className='Post-Description'>
-      <p>{this.state.post.description}</p>
-     </div>
-     <div className="Post-AuthorDateWrapper">
-      <div className='Post-Author'>
-       <Author authorID={this.state.post.authorID} authorName={this.state.author.name} authorAvatar={this.state.author.avatar} />
-      </div>
-      <div className='Post-Date'>
-       <p>{this.state.post.date}</p>
-      </div>
-     </div>
-     <div className='Post-Statistic'>
-      <Statistic likes={this.state.post.likes} view={this.state.post.view} comment={this.state.post.comments} />
-     </div>
-     <div className='Post-Link'>
-      <a href={'/posts/' + this.props.postID}>Continue reading ></a>
-     </div>
+
+     {
+
+      this.state.Loading ?
+       <ClipLoader
+        size={70}
+        color={'gray'}
+        loading={this.state.Loading}
+       />
+       :
+
+       <>
+        <div className='Post-Image'>
+         <a href={'/posts/' + this.props.postID}>
+          <img src={this.state.post.img} alt='' />
+         </a>
+        </div>
+        <div className='Post-Tag'>
+         {this.state.post.tag instanceof Array ? this.state.post.tag.map((tag, i) => <a key={tag} href={this.state.post.tagLink[i]}>{this.state.post.tag[i]}{i === this.state.post.tag.length - 1 ? '' : ', '}</a>) : <a href={this.state.post.tagLink}>{this.state.post.tag}</a>}
+        </div>
+        <div className='Post-Title'>
+         <a href={'/posts/' + this.props.postID}><h1>{this.state.post.title}</h1></a>
+        </div>
+        <div className='Post-Description'>
+         <p>{this.state.post.description}</p>
+        </div>
+        <div className="Post-AuthorDateWrapper">
+         <div className='Post-Author'>
+          <Author authorID={this.state.post.authorID} authorName={this.state.author.displayName} authorAvatar={this.state.author.photoURL} />
+         </div>
+         <div className='Post-Date'>
+          <p>{this.state.post.date}</p>
+         </div>
+        </div>
+        <div className='Post-Statistic'>
+         <Statistic likes={this.state.post.likes} view={this.state.post.view} comment={this.state.post.comments} />
+        </div>
+        <div className='Post-Link'>
+         <a href={'/posts/' + this.props.postID}>Continue reading ></a>
+        </div>
+       </>
+
+     }
+
     </div>
-   </article >
+   </article>
   )
  }
 }

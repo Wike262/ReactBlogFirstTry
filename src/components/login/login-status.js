@@ -5,14 +5,20 @@ import * as firebaseui from 'firebaseui';
 import 'firebaseui/dist/firebaseui.css';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { Link } from 'react-router-dom'
+import { FaSignOutAlt } from 'react-icons/fa';
+import { IoIosSettings } from 'react-icons/io';
 import './login-status.sass'
+
 
 class LoginStatus extends React.Component {
  constructor(props) {
   super(props)
   this.state = {
    Auth: '',
-   loading: true
+   Token: '',
+   Avatar: '',
+   Name: '',
+   Loading: true
   }
  }
 
@@ -25,21 +31,24 @@ class LoginStatus extends React.Component {
      user.getIdToken().then((accessToken) => {
       this.setState({
        Auth: true,
-       loading: false
+       Token: user.uid,
+       Avatar: user.photoURL,
+       Name: user.displayName,
+       Loading: false
       })
-      document.getElementById('Account-Name').textContent = user.displayName;
-      document.getElementById('SingInOut').addEventListener('click', () => {
+      document.querySelector('.SingInOut').addEventListener('click', () => {
        firebase.auth().signOut();
       })
-      document.getElementById('SingInOut').textContent = 'Sign out';
-      document.getElementById('Settings').textContent = 'settings';
-
      });
     } else {
      // User is signed out.
-     document.getElementById('SingInOut').textContent = 'Sign in';
-     document.getElementById('Account-Name').textContent = '';
-     document.getElementById('Settings').textContent = '';
+     this.setState({
+      Auth: false.Auth,
+      Token: null,
+      Avatar: null,
+      Name: null,
+      Loading: false
+     })
     }
    }, function (error) {
     console.log(error);
@@ -54,23 +63,42 @@ class LoginStatus extends React.Component {
 
  render() {
   return (
-   this.state.loading ? <ClipLoader sizeUnit={"px"}
-    size={150}
-    color={'gray'}
-    loading={this.state.loading} /> :
-
-    <div className="Account">
+   this.state.Loading ?
+    <ClipLoader sizeUnit={'px'}
+     size={70}
+     color={'gray'}
+     loading={this.state.Loading} />
+    :
+    <div className='Account'>
      <div className='Account-Status Status'>
-      <img className='Account-Avatar' src='https://firebasestorage.googleapis.com/v0/b/my-app-dd6a6.appspot.com/o/Images%2Fnophoto.jpg?alt=media&token=764110c3-1272-46e2-834b-3a15a82fc9aa' alt="" />
-      <div className='Account-Name Name' id="Account-Name"></div>
-      <Link to={this.state.Auth ? '/' : '/login'} className='Account-SingInOut' id="SingInOut" />
-      <Link to={'/account-details'} className="Account-Settings Settings" id='Settings'></Link>
+      <div className='Account-Wrapper Wrapper'>
+       <Link to={'/author/' + this.state.Token}>
+        {this.state.Auth && <img className='Account-Avatar' src={
+         !!this.state.Avatar ?
+          this.state.Avatar
+          :
+          'https://firebasestorage.googleapis.com/v0/b/my-app-dd6a6.appspot.com/o/Images%2Fnophoto.jpg?alt=media&token=764110c3-1272-46e2-834b-3a15a82fc9aa'} alt='' />}
+       </Link>
+       <div className="Wrapper">
+        <h3 className='Account-Name Name'>{this.state.Auth ? this.state.Name : ''}</h3>
+        <div className="Account-Wrapper Wrapper">
+         <Link to={this.state.Auth ? '/' : '/login'} className='Account-SingInOut SingInOut'>
+          {this.state.Auth ?
+           'Sign Out ' : 'Sign In '}
+          <FaSignOutAlt />
+         </Link>
+         <Link to={'/account-details'} className='Account-Settings Settings'>
+          {this.state.Auth ?
+           <div className='Wrapper' >Settigns <IoIosSettings /></div>
+           : ''}
+         </Link>
+        </div>
+       </div>
+      </div>
      </div>
     </div>
-
   )
  }
-
 }
 
 export default LoginStatus;
