@@ -4,14 +4,19 @@ const cors = require('cors')({
  origin: true,
 });
 const firebase = require('firebase')
-let db = firebase.firestore();
 var serviceAccount = require('c:/Users/kiril/Downloads/my-app-dd6a6-firebase-adminsdk-7dpy0-443397d60c.json');
 
-var app = admin.initializeApp({
+admin.initializeApp({
  credential: admin.credential.cert(serviceAccount),
- databaseURL: "https://my-app-dd6a6.firebaseio.com"
+ databaseURL: "https://my-app-dd6a6.firebaseio.com",
 });
 
+firebase.initializeApp({
+ apiKey: 'AIzaSyAjyavp9xjnfj6mXmb9GfuQlSx64xaVl_Q',
+ authDomain: 'my-app-dd6a6.firebaseapp.com',
+ projectId: 'my-app-dd6a6'
+})
+let db = firebase.firestore();
 
 exports.author = functions.https.onRequest(async (req, res) => {
  const id = req.query.id;
@@ -28,12 +33,13 @@ exports.author = functions.https.onRequest(async (req, res) => {
 })
 
 exports.post = functions.https.onRequest(async (req, res) => {
- const postId = req.query.id
+ const postID = req.query.id
+
  return cors(req, res, () => {
   db.collection('posts').doc('' + postID)
    .get()
-   .then((Post) => {
-    res.status(200).send(Post.toJSON())
+   .then((response) => {
+    res.status(200).send(response.data())
    })
    .catch((error) => {
     res.status(406).send(error)

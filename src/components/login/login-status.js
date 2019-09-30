@@ -1,14 +1,16 @@
 import React from 'react';
-import * as firebase from 'firebase/app';
-import 'firebase/firebase-firestore';
-import * as firebaseui from 'firebaseui';
-import 'firebaseui/dist/firebaseui.css';
+
 import ClipLoader from 'react-spinners/ClipLoader';
-import { Link } from 'react-router-dom'
 import { FaSignOutAlt } from 'react-icons/fa';
 import { IoIosSettings } from 'react-icons/io';
+import { Link } from 'react-router-dom'
+import * as firebase from 'firebase/app';
+
+import 'firebase/firebase-firestore';
+import 'firebaseui/dist/firebaseui.css';
 import './login-status.sass'
 
+var noPhoto = 'https://firebasestorage.googleapis.com/v0/b/my-app-dd6a6.appspot.com/o/Images%2Fnophoto.jpg?alt=media&token=764110c3-1272-46e2-834b-3a15a82fc9aa';
 
 class LoginStatus extends React.Component {
  constructor(props) {
@@ -41,7 +43,6 @@ class LoginStatus extends React.Component {
       })
      });
     } else {
-     // User is signed out.
      this.setState({
       Auth: false.Auth,
       Token: null,
@@ -77,7 +78,8 @@ class LoginStatus extends React.Component {
          !!this.state.Avatar ?
           this.state.Avatar
           :
-          'https://firebasestorage.googleapis.com/v0/b/my-app-dd6a6.appspot.com/o/Images%2Fnophoto.jpg?alt=media&token=764110c3-1272-46e2-834b-3a15a82fc9aa'} alt='' />}
+          noPhoto
+        } alt='' />}
        </Link>
        <div className="Wrapper">
         <h3 className='Account-Name Name'>{this.state.Auth ? this.state.Name : ''}</h3>

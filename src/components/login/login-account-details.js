@@ -1,9 +1,9 @@
 import React from 'react';
 import * as firebase from 'firebase/app';
 import 'firebase/firebase-firestore';
-import * as firebaseui from 'firebaseui';
 import 'firebaseui/dist/firebaseui.css';
 import Input from '../callback/input/input'
+
 
 class LoginStatus extends React.Component {
  constructor(props) {
