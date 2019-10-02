@@ -119,6 +119,7 @@ class Post extends React.Component {
 
  componentDidMount() {
   if (!!this.props.post) {
+   console.log(this.props)
    this.setState({
     post: this.props.post,
     author: this.props.author,

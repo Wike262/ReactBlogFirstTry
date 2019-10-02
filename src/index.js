@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom';
 
 import Menu from './components/menu/menu'
 import Login from './components/login/login'
-import error from './components/404/404'
+import error from './components/errors/404/404'
+import AccountDetails from './components/login/login-account-details'
 
 import Home from './pages/home/home'
 import About from './pages/about/about'
 import Contact from './pages/contact/contact'
 import Single from './pages/single_post/single'
 
-import AccountDetails from './components/login/login-account-details'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -34,7 +34,7 @@ ReactDOM.render(
     <Route exact path='/' component={Home} />
     <Route path='/about' component={About} />
     <Route path='/contact' component={Contact} />
-    <Route path='/account-details' component={AccountDetails} />
+    <Route path='/account-details' component={props => <AccountDetails {...props} />} />
     <Route path='/login' component={Login} />
     <Route path={'/author/:token'} component={About} />
     <Route path={'/posts/:postID'} component={props => <Single {...props} />} />

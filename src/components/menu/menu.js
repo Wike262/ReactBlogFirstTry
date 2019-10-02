@@ -45,7 +45,6 @@ const Menu = () => {
      <Navigation mod='menu-right' links={lin} />
      <div className='Menu-BottomInfomation'>
       <LoginStatus />
-      <Social />
      </div>
     </div>
    </div>

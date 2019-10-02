@@ -29,7 +29,6 @@ class LoginStatus extends React.Component {
   firebase.initApp = () => {
    firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-     // User is signed in.
      user.getIdToken().then((accessToken) => {
       this.setState({
        Auth: true,
@@ -55,7 +54,6 @@ class LoginStatus extends React.Component {
     console.log(error);
    });
   };
-
   window.addEventListener('load', function () {
    firebase.initApp();
   });
@@ -89,7 +87,12 @@ class LoginStatus extends React.Component {
            'Sign Out ' : 'Sign In '}
           <FaSignOutAlt />
          </Link>
-         <Link to={'/account-details'} className='Account-Settings Settings'>
+         <Link to={{
+          pathname: '/account-details',
+          state: {
+           Token: this.state.Token
+          }
+         }} className='Account-Settings Settings'>
           {this.state.Auth ?
            <div className='Wrapper' >Settigns <IoIosSettings /></div>
            : ''}
