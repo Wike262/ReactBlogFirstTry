@@ -3,7 +3,6 @@ import { FaBars } from "react-icons/fa";
 import { FaTimes } from "react-icons/fa";
 import Logo from '../../Img/dotblog.png';
 import LoginStatus from '../login/login-status';
-import Social from '../social/social';
 import './menu.sass';
 import './menu-mobile.sass';
 import Navigation from './Navigation/Navigation';
