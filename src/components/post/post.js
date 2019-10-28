@@ -13,7 +13,11 @@ import './post-mobile.sass'
 firebase.initializeApp({
  apiKey: 'AIzaSyAjyavp9xjnfj6mXmb9GfuQlSx64xaVl_Q',
  authDomain: 'my-app-dd6a6.firebaseapp.com',
+ databaseURL: 'https://my-app-dd6a6.firebaseio.com',
  projectId: 'my-app-dd6a6',
+ storageBucket: 'my-app-dd6a6.appspot.com',
+ messagingSenderId: '404535255675',
+ appId: '1:404535255675:web:bd0b11c177702760'
 })
 
 
@@ -94,7 +98,7 @@ function PostInline(post, author, modificClass, postID) {
    <div className='Post-Statistic'>
     <Statistic likes={post.likes} view={post.view} comment={post.comments} />
    </div>
-   <div className='Post-Link'>
+   <div className='Post-Link Link'>
     <Link to={{
      pathname: '/posts/' + postID,
      state: {
@@ -152,7 +156,6 @@ class Post extends React.Component {
 
  render() {
   const modificClass = !!this.props.modClass ? this.props.modClass : ' col-xl-4 col-md-6 col-12';
-  var postType;
   return (
    <article className={'Post-Wrapper ' + modificClass}>
     <div className='Post'>
@@ -166,9 +169,9 @@ class Post extends React.Component {
        />
        :
        modificClass === 'Post-SingleContent' ?
-        postType = PostSinglePage(this.state.post, this.state.author, modificClass, this.props.postID)
+        PostSinglePage(this.state.post, this.state.author, modificClass, this.props.postID)
         :
-        postType = PostInline(this.state.post, this.state.author, modificClass, this.props.postID)
+        PostInline(this.state.post, this.state.author, modificClass, this.props.postID)
      }
 
     </div>

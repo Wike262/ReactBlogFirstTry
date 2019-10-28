@@ -4,11 +4,12 @@ const cors = require('cors')({
  origin: true,
 });
 const firebase = require('firebase')
-var serviceAccount = require('c:/Users/kiril/Downloads/my-app-dd6a6-firebase-adminsdk-7dpy0-443397d60c.json');
+var serviceAccount = require('c:/Users/kiril/Downloads/my-app-dd6a6-firebase-adminsdk-7dpy0-6b99140b7d.json');
 
 admin.initializeApp({
  credential: admin.credential.cert(serviceAccount),
  databaseURL: "https://my-app-dd6a6.firebaseio.com",
+ storageBucket: 'my-app-dd6a6.appspot.com',
 });
 
 firebase.initializeApp({
@@ -17,6 +18,7 @@ firebase.initializeApp({
  projectId: 'my-app-dd6a6'
 })
 let db = firebase.firestore();
+var bucket = admin.storage().bucket();
 
 exports.author = functions.https.onRequest(async (req, res) => {
  const id = req.query.id;
@@ -44,5 +46,97 @@ exports.post = functions.https.onRequest(async (req, res) => {
    .catch((error) => {
     res.status(406).send(error)
    })
+ })
+})
+
+exports.administration = functions.https.onRequest(async (req, res) => {
+ const userID = req.query.id;
+
+ return cors(req, res, () => {
+  admin.auth().setCustomUserClaims(userID, { admin: true });
+  res.status(200).send('Success');
+ });
+});
+
+function updateName(id, status) {
+ admin.auth().updateUser(id, {
+  displayName: status,
+ })
+  .then(() => {
+   return
+  })
+  .catch((error) => {
+   console.log(error)
+   return error
+  })
+}
+
+function updateAvatar(id, status) {
+ bucket = admin.storage(status)
+
+ console.log(bucket)
+ admin.auth().updateUser(id, {
+  photoURL: status,
+ })
+  .then(() => {
+   return
+  })
+  .catch((error) => {
+   console.log(error)
+   return error
+  })
+}
+
+function updateEmail(id, status) {
+ admin.auth().updateUser(id, {
+  email: status,
+ })
+  .then(() => {
+   return
+  })
+  .catch((error) => {
+   console.log(error)
+   return error
+  })
+}
+
+function updatePhone(id, status) {
+ if (status[0] === '8' || status[0] === '7') {
+  status = '+7' + status.slice(1)
+  console.log(status)
+ }
+ admin.auth().updateUser(id, {
+  phoneNumber: status,
+ })
+  .then(() => {
+   return
+  })
+  .catch((error) => {
+   console.log(error)
+   return error
+  })
+}
+
+exports.updateUserInformation = functions.https.onRequest(async (req, res) => {
+ const userID = req.query.id;
+ console.log(req.query.id)
+
+ const name = req.query.name;
+ console.log(req.query.name)
+
+ const phone = req.query.phone;
+ console.log(req.query.phone)
+
+ const email = req.query.email;
+ console.log(req.query.email)
+
+ const avatar = req.query.avatarURL;
+ console.log(req.query.avatarURL)
+
+ return cors(req, res, () => {
+  if (name === '0' ? false : true) { updateName(userID, name) }
+  // if (email === 0 ? false : true) { updateEmail(userID, email) }
+  if (avatar === 0 ? false : true) { updateAvatar(userID, avatar) }
+  if (phone === 0 ? false : true) { updatePhone(userID, phone) }
  })
 })

@@ -9,6 +9,7 @@ import * as firebase from 'firebase/app';
 import 'firebase/firebase-firestore';
 import 'firebaseui/dist/firebaseui.css';
 import './account-status.sass'
+import './account-status-mobile.sass'
 
 var noPhoto = 'https://firebasestorage.googleapis.com/v0/b/my-app-dd6a6.appspot.com/o/Images%2Fnophoto.jpg?alt=media&token=764110c3-1272-46e2-834b-3a15a82fc9aa';
 
