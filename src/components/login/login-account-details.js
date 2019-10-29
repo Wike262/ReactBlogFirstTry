@@ -166,18 +166,21 @@ class LoginAccountDetail extends React.Component {
      document.getElementById('AvatarPhoto').src = e.target.result;
     };
     reader.readAsDataURL(document.getElementById('Avatar').files[0]);
-    var rand = Math.random().toString(36).substr(2) + Math.random().toString(36).substr(2);
-    var storageREF = firebase.storage().ref('profilePictures/' + rand + '.png');
-    console.log(file.name)
-    var task = storageREF.put(file);
-    task.snapshot.ref.getDownloadURL().then((downloadURL) => {
-     console.log(downloadURL)
+    let rand = Math.random().toString(36).substr(2) + Math.random().toString(36).substr(2);
+    let fileName = rand
+    let fileType = file.name.slice(file.name.indexOf('.'))
+    let storageREF = firebase.storage().ref('profilePictures/' + rand + fileType);
+    let task = storageREF.put(file);
+    task.on('state_changed', () => { }, () => { }, () => {
+     task.snapshot.ref.getDownloadURL().then((downloadURL) => {
+      console.log(downloadURL)
+      fetch('http://localhost:5000/my-app-dd6a6/us-central1/updateUserInformation?id=' + this.props.location.state.Token + '&name=0&phone=0&email=0&avatarURL=' + fileName + fileType)
+       .then((response) => {
+        console.log(123)
+       })
+     });
+    })
 
-     fetch('http://localhost:5000/my-app-dd6a6/us-central1/updateUserInformation?id=' + this.props.location.state.Token + '&name=0&phone=0&email=0&avatarURL=' + file.name)
-      .then((response) => {
-       console.log(123)
-      })
-    });
 
    });
    document.getElementById('ResetPassword').addEventListener('click', () => {

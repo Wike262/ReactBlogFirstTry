@@ -11,6 +11,7 @@ admin.initializeApp({
  databaseURL: "https://my-app-dd6a6.firebaseio.com",
  storageBucket: 'my-app-dd6a6.appspot.com',
 });
+const path = require('path');
 
 firebase.initializeApp({
  apiKey: 'AIzaSyAjyavp9xjnfj6mXmb9GfuQlSx64xaVl_Q',
@@ -72,9 +73,7 @@ function updateName(id, status) {
 }
 
 function updateAvatar(id, status) {
- bucket = admin.storage(status)
-
- console.log(bucket)
+ status = 'https://firebasestorage.googleapis.com/v0/b/my-app-dd6a6.appspot.com/o/profilePictures%2F' + status + '?alt=media';
  admin.auth().updateUser(id, {
   photoURL: status,
  })
@@ -119,24 +118,16 @@ function updatePhone(id, status) {
 
 exports.updateUserInformation = functions.https.onRequest(async (req, res) => {
  const userID = req.query.id;
- console.log(req.query.id)
-
  const name = req.query.name;
- console.log(req.query.name)
-
  const phone = req.query.phone;
- console.log(req.query.phone)
-
  const email = req.query.email;
  console.log(req.query.email)
 
  const avatar = req.query.avatarURL;
- console.log(req.query.avatarURL)
-
  return cors(req, res, () => {
   if (name === '0' ? false : true) { updateName(userID, name) }
-  // if (email === 0 ? false : true) { updateEmail(userID, email) }
-  if (avatar === 0 ? false : true) { updateAvatar(userID, avatar) }
-  if (phone === 0 ? false : true) { updatePhone(userID, phone) }
+  if (email === '0' ? false : true) { updateEmail(userID, email) }
+  if (avatar === '0' ? false : true) { updateAvatar(userID, avatar) }
+  if (phone === '0' ? false : true) { updatePhone(userID, phone) }
  })
 })
