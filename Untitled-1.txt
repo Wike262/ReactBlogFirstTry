@@ -1,0 +1,187 @@
+const posts =
+ [
+  {
+   id: '0',
+   tag: 'technology',
+   tagLink: '#',
+   title: 'the newest technology on this year 2019',
+   description: 'Even the all-powerful Pointing has no control about the blind texts it is an almost',
+   img: post1,
+   authorID: '0',
+   likes: '3',
+   view: '100',
+   comments: '5',
+   date: '28.11.2018',
+   link: '#'
+  },
+  {
+   id: '1',
+   tag: 'travel',
+   tagLink: '#',
+   title: 'what to pack when visiting sea',
+   description: 'Even the all-powerful Pointing has no control about the blind texts it is an almost',
+   img: post2,
+   authorID: '1',
+   likes: '3',
+   view: '100',
+   comments: '5',
+   date: '28.11.2018',
+   link: '#'
+  },
+  {
+   id: '2',
+   tag: 'fashion',
+   tagLink: '#',
+   title: 'Awesome Fashion Trend in For Summer',
+   description: 'Even the all-powerful Pointing has no control about the blind texts it is an almost',
+   img: post3,
+   authorID: '2',
+   likes: '3',
+   view: '100',
+   comments: '5',
+   date: '28.11.2018',
+   link: '#'
+  },
+  {
+   id: '3',
+   tag: 'TRAVEL',
+   tagLink: '#',
+   title: '10 Most Awesome Place',
+   description: 'Even the all-powerful Pointing has no control about the blind texts it is an almost',
+   img: post4,
+   authorID: '0',
+   likes: '3',
+   view: '100',
+   comments: '5',
+   date: '28.11.2018',
+   link: '#'
+  },
+  {
+   id: '4',
+   tag: 'TRAVEL',
+   tagLink: '#',
+   title: '10 Most Awesome Beach in Asia',
+   description: 'Even the all-powerful Pointing has no control about the blind texts it is an almost',
+   img: post5,
+   authorID: '1',
+   likes: '3',
+   view: '100',
+   comments: '5',
+   date: '28.11.2018',
+   link: '#'
+  },
+  {
+   id: '5',
+   tag: 'TRAVEL',
+   tagLink: '#',
+   title: 'Top Amazing Places to Go in Summer',
+   description: 'Even the all-powerful Pointing has no control about the blind texts it is an almost',
+   img: post6,
+   authorID: '2',
+   likes: '3',
+   view: '100',
+   comments: '5',
+   date: '28.11.2018',
+   link: '#'
+  },
+  {
+   id: '6',
+   tag: 'FASHION',
+   tagLink: '#',
+   title: '7 Beginner Photographer’s Mistakes',
+   description: 'Even the all-powerful Pointing has no control about the blind texts it is an almost',
+   img: post7,
+   authorID: '0',
+   likes: '3',
+   view: '100',
+   comments: '5',
+   date: '28.11.2018',
+   link: '#'
+  },
+  {
+   id: '7',
+   tag: ['PHOTOGRAPHY', 'TRAVEL'],
+   tagLink: ['#', '#'],
+   title: 'Excited to Visit in Palawan Philippines',
+   description: 'Even the all-powerful Pointing has no control about the blind texts it is an almost',
+   img: post8,
+   authorID: '1',
+   likes: '3',
+   view: '100',
+   comments: '5',
+   date: '28.11.2018',
+   link: '#'
+  },
+  {
+   id: '8',
+   tag: 'technology',
+   tagLink: '#',
+   title: 'How to Make a Paper Boat in Scratch',
+   description: 'Even the all-powerful Pointing has no control about the blind texts it is an almost',
+   img: post9,
+   authorID: '2',
+   likes: '3',
+   view: '100',
+   comments: '5',
+   date: '28.11.2018',
+   link: '#'
+  },
+  {
+   id: '9',
+   tag: 'FASHION',
+   tagLink: '#',
+   title: '10 Best Way to Styling Your Lifestyle',
+   description: 'Even the all-powerful Pointing has no control about the blind texts it is an almost',
+   img: post10,
+   authorID: '0',
+   likes: '3',
+   view: '100',
+   comments: '5',
+   date: '28.11.2018',
+   link: '#'
+  },
+  {
+   id: '10',
+   tag: 'FASHION',
+   tagLink: '#',
+   title: '10 Tips to Become a Fashion Pro',
+   description: 'Even the all-powerful Pointing has no control about the blind texts it is an almost',
+   img: post11,
+   authorID: '1',
+   likes: '3',
+   view: '100',
+   comments: '5',
+   date: '28.11.2018',
+   link: '#'
+  },
+  {
+   id: '11',
+   tag: 'PHOTOGRAPHY',
+   tagLink: '#',
+   title: 'Visit the Most Amazing Place in North America',
+   description: 'Even the all-powerful Pointing has no control about the blind texts it is an almost',
+   img: post12,
+   authorID: '2',
+   likes: '3',
+   view: '100',
+   comments: '5',
+   date: '28.11.2018',
+   link: '#'
+  }
+ ]
+
+
+     user.getIdToken().then(function (accessToken) {
+     document.getElementById('sign-in-status').textContent = 'Signed in';
+     document.getElementById('sign-in').textContent = 'Sign out';
+     document.getElementById('account-details').textContent = JSON.stringify({
+      displayName: displayName,
+      email: email,
+      emailVerified: emailVerified,
+      phoneNumber: phoneNumber,
+      photoURL: photoURL,
+      uid: uid,
+      accessToken: accessToken,
+      providerData: providerData
+     }, null, '  ');
+    });

@@ -21,6 +21,8 @@ class LoginStatus extends React.Component {
    Token: '',
    Avatar: '',
    Name: '',
+   Admin: '',
+   Author: '',
    Loading: true
   }
  }
@@ -40,6 +42,12 @@ class LoginStatus extends React.Component {
       })
       document.querySelector('.SingInOut').addEventListener('click', () => {
        firebase.auth().signOut();
+      })
+      firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
+       this.setState({
+        Admin: !!idTokenResult.claims.admin,
+        Author: !!idTokenResult.claims.author,
+       })
       })
      });
     } else {
@@ -80,9 +88,9 @@ class LoginStatus extends React.Component {
           noPhoto
         } alt='' />}
        </Link>
-       <div className="Wrapper">
+       <div className='Wrapper'>
         <h3 className='Account-Name Name'>{this.state.Auth ? this.state.Name : ''}</h3>
-        <div className="Account-Wrapper Wrapper">
+        <div className='Account-Wrapper Wrapper'>
          <Link to={this.state.Auth ? '/' : '/login'} className='Account-SingInOut SingInOut'>
           {this.state.Auth ?
            'Sign Out ' : 'Sign In '}
@@ -102,6 +110,15 @@ class LoginStatus extends React.Component {
        </div>
       </div>
      </div>
+     {
+      this.state.Admin ?
+       <div className='Account-LinkToAdmin Link'>
+        <Link to='/admin'>Go to admin panel</Link>
+       </div>
+       :
+       ''
+     }
+
     </div>
   )
  }

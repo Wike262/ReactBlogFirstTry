@@ -10,6 +10,7 @@ import Home from './pages/home/home'
 import About from './pages/about/about'
 import Contact from './pages/contact/contact'
 import Single from './pages/single_post/single'
+import Admin from './pages/admin/admin'
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
@@ -31,6 +32,7 @@ ReactDOM.render(
   <Menu />
   <div className='Page'>
    <Switch>
+
     <Route exact path='/' component={Home} />
     <Route path='/about' component={About} />
     <Route path='/contact' component={Contact} />
@@ -38,6 +40,8 @@ ReactDOM.render(
     <Route path='/login' component={Login} />
     <Route path={'/author/:token'} component={About} />
     <Route path={'/posts/:postID'} component={props => <Single {...props} />} />
+    <Route path='/admin' component={Admin} />
+
     <Route component={error} />
    </Switch>
   </div>

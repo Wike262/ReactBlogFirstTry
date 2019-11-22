@@ -102,7 +102,6 @@ function updateEmail(id, status) {
 function updatePhone(id, status) {
  if (status[0] === '8' || status[0] === '7') {
   status = '+7' + status.slice(1)
-  console.log(status)
  }
  admin.auth().updateUser(id, {
   phoneNumber: status,
@@ -121,13 +120,35 @@ exports.updateUserInformation = functions.https.onRequest(async (req, res) => {
  const name = req.query.name;
  const phone = req.query.phone;
  const email = req.query.email;
- console.log(req.query.email)
-
  const avatar = req.query.avatarURL;
+
  return cors(req, res, () => {
   if (name === '0' ? false : true) { updateName(userID, name) }
   if (email === '0' ? false : true) { updateEmail(userID, email) }
   if (avatar === '0' ? false : true) { updateAvatar(userID, avatar) }
   if (phone === '0' ? false : true) { updatePhone(userID, phone) }
  })
+})
+
+
+exports.AllUsers = functions.https.onRequest(async (req, res) => {
+ var users = [];
+
+ var i = 0;
+
+ return cors(req, res, () => {
+  return admin
+   .auth()
+   .listUsers()
+   .then((listUsersResult) => {
+    listUsersResult.users.map((user) => {
+     users[i] = user;
+     i++
+    })
+    res.status(200).send(users);
+
+   })
+   .catch((error) => { console.log(error) })
+ })
+
 })

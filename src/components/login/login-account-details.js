@@ -133,30 +133,20 @@ class LoginAccountDetail extends React.Component {
    document.getElementById('Submit').addEventListener('click', (e) => {
     e.preventDefault()
     let name = this.state.Name === document.getElementById('Name').value ? 0 : document.getElementById('Name').value;
-    console.log(this.state.Name === document.getElementById('Name').value)
-    console.log(this.state.Name)
-    console.log(document.getElementById('Name').value)
 
     let lastName = this.state.LastName === document.getElementById('LastName').value ? 0 : document.getElementById('LastName').value;
-    console.log(this.state.LastName === document.getElementById('LastName').value)
-    console.log(this.state.LastName)
-    console.log(document.getElementById('LastName').value)
 
     let phone = this.state.Phone === document.getElementById('Phone').value ? 0 : document.getElementById('Phone').value;
-    console.log(this.state.Phone === document.getElementById('Phone').value)
-    console.log(this.state.Phone)
-    console.log(document.getElementById('Phone').value)
 
     let email = this.state.Email === document.getElementById('Email').value ? 0 : document.getElementById('Email').value;
-    if (name != 0 || lastName != 0) {
+    if (name !== 0 || lastName !== 0) {
      var nameFULL = document.getElementById('Name').value + ' ' + document.getElementById('LastName').value;
     }
     else {
      nameFULL = 0
     }
-    fetch('http://localhost:5000/my-app-dd6a6/us-central1/updateUserInformation?id=' + this.props.location.state.Token + '&name=' + nameFULL + '&phone=' + phone + '&email=' + email + '&avatarURL=' + '0')
+    fetch('http://localhost:5000/my-app-dd6a6/us-central1/updateUserInformation?id=' + this.props.location.state.Token + '&name=' + nameFULL + '&phone=' + phone + '&email=' + email + '&avatarURL=0')
      .then((response) => {
-      console.log(123)
      })
    })
    document.getElementById('Avatar').addEventListener('change', (e) => {
@@ -173,10 +163,8 @@ class LoginAccountDetail extends React.Component {
     let task = storageREF.put(file);
     task.on('state_changed', () => { }, () => { }, () => {
      task.snapshot.ref.getDownloadURL().then((downloadURL) => {
-      console.log(downloadURL)
       fetch('http://localhost:5000/my-app-dd6a6/us-central1/updateUserInformation?id=' + this.props.location.state.Token + '&name=0&phone=0&email=0&avatarURL=' + fileName + fileType)
        .then((response) => {
-        console.log(123)
        })
      });
     })
