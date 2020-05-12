@@ -8,8 +8,8 @@ import * as firebase from 'firebase/app';
 
 import 'firebase/firebase-firestore';
 import 'firebaseui/dist/firebaseui.css';
-import './account-status.sass'
-import './account-status-mobile.sass'
+import './_status.sass'
+import './_status-mobile.sass'
 
 var noPhoto = 'https://firebasestorage.googleapis.com/v0/b/my-app-dd6a6.appspot.com/o/Images%2Fnophoto.jpg?alt=media&token=764110c3-1272-46e2-834b-3a15a82fc9aa';
 
@@ -28,43 +28,41 @@ class LoginStatus extends React.Component {
  }
 
 
+ singOut() {
+  firebase.auth().signOut();
+ }
+
  componentDidMount() {
-  firebase.initApp = () => {
-   firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-     user.getIdToken().then((accessToken) => {
-      this.setState({
-       Auth: true,
-       Token: user.uid,
-       Avatar: user.photoURL,
-       Name: user.displayName,
-       Loading: false
-      })
-      document.querySelector('.SingInOut').addEventListener('click', () => {
-       firebase.auth().signOut();
-      })
-      firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
-       this.setState({
-        Admin: !!idTokenResult.claims.admin,
-        Author: !!idTokenResult.claims.author,
-       })
-      })
-     });
-    } else {
+  firebase.auth().onAuthStateChanged((user) => {
+   if (user) {
+    user.getIdToken().then((accessToken) => {
      this.setState({
-      Auth: false.Auth,
-      Token: null,
-      Avatar: null,
-      Name: null,
+      Auth: true,
+      Token: user.uid,
+      Avatar: user.photoURL,
+      Name: user.displayName,
       Loading: false
      })
-    }
-   }, function (error) {
-    console.log(error);
-   });
-  };
-  window.addEventListener('load', function () {
-   firebase.initApp();
+     document.querySelector('.SingInOut').addEventListener('click', () => {
+     })
+     firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
+      this.setState({
+       Admin: !!idTokenResult.claims.admin,
+       Author: !!idTokenResult.claims.author,
+      })
+     })
+    });
+   } else {
+    this.setState({
+     Auth: false.Auth,
+     Token: null,
+     Avatar: null,
+     Name: null,
+     Loading: false
+    })
+   }
+  }, function (error) {
+   console.log(error);
   });
  }
 
@@ -91,7 +89,7 @@ class LoginStatus extends React.Component {
        <div className='Wrapper'>
         <h3 className='Account-Name Name'>{this.state.Auth ? this.state.Name : ''}</h3>
         <div className='Account-Wrapper Wrapper'>
-         <Link to={this.state.Auth ? '/' : '/login'} className='Account-SingInOut SingInOut'>
+         <Link onClick={this.singOut} to={this.state.Auth ? '/' : '/login'} className='Account-SingInOut SingInOut'>
           {this.state.Auth ?
            'Sign Out ' : 'Sign In '}
           <FaSignOutAlt />

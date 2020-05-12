@@ -1,134 +1,97 @@
-const functions = require('firebase-functions');
-const admin = require('firebase-admin');
-const cors = require('cors')({
- origin: true,
-});
-const firebase = require('firebase')
-var serviceAccount = require('c:/Users/kiril/Downloads/my-app-dd6a6-firebase-adminsdk-7dpy0-6b99140b7d.json');
+var admin = require("firebase-admin");
+var functions = require("firebase-functions");
+
+var nodemailer = require("nodemailer");
+var firebase = require("firebase");
 
 admin.initializeApp({
- credential: admin.credential.cert(serviceAccount),
+ credential: admin.credential.applicationDefault(),
  databaseURL: "https://my-app-dd6a6.firebaseio.com",
- storageBucket: 'my-app-dd6a6.appspot.com',
+ storageBucket: "my-app-dd6a6.appspot.com",
 });
-const path = require('path');
 
 firebase.initializeApp({
- apiKey: 'AIzaSyAjyavp9xjnfj6mXmb9GfuQlSx64xaVl_Q',
- authDomain: 'my-app-dd6a6.firebaseapp.com',
- projectId: 'my-app-dd6a6'
-})
+ apiKey: "AIzaSyAjyavp9xjnfj6mXmb9GfuQlSx64xaVl_Q",
+ authDomain: "my-app-dd6a6.firebaseapp.com",
+ projectId: "my-app-dd6a6",
+});
 let db = firebase.firestore();
-var bucket = admin.storage().bucket();
 
-exports.author = functions.https.onRequest(async (req, res) => {
- const id = req.query.id;
+exports.author = functions.https.onCall((data, context) => {
+ const id = data.id;
 
- return cors(req, res, () => {
-  admin.auth().getUser(id)
-   .then((userRecord) => {
-    res.send(userRecord.toJSON())
-   })
-   .catch((error) => {
-    res.status(406).send(error)
-   })
- })
-})
+ return admin
+  .auth()
+  .getUser(id)
+  .then((userRecord) => userRecord)
+  .catch((error) => error);
+});
 
-exports.post = functions.https.onRequest(async (req, res) => {
- const postID = req.query.id
+exports.posts = functions.https.onCall((data, context) => {
+ const postID = data.postID || null;
+ const all = data.all || false;
 
- return cors(req, res, () => {
-  db.collection('posts').doc('' + postID)
+ if (postID !== null) {
+  return db
+   .collection("posts")
+   .doc(`${postID}`)
    .get()
-   .then((response) => {
-    res.status(200).send(response.data())
+   .then((doc) => doc.data())
+   .catch((error) => error);
+ }
+ if (all === true) {
+  let posts = {};
+  return db
+   .collection("posts")
+   .get()
+   .then((querySnapshot) =>
+    querySnapshot.forEach((doc) => (posts[`${doc.id}`] = doc.data()))
+   )
+   .then(() => {
+    return posts;
    })
-   .catch((error) => {
-    res.status(406).send(error)
+   .catch((error) => error);
+ }
+ return { error: 'NotSpecifietCalling' }
+});
+
+
+
+exports.updateUserInformation = functions.https.onCall((data, context) => {
+ const callingUserID = context.auth.uid
+ const userID = data.uid
+ return admin.auth().getUser(userID).then((userRecord) => {
+  const ProfileDisplayName = data.name || userRecord.displayName
+  const ProfilePhoneNumber = data.phone || userRecord.phoneNumber
+  const ProfileEmail = data.email || userRecord.email
+  const ProfilePhotoURL = data.avatarURL || userRecord.photoURL
+  const ProfileDisabled = data.disabled || userRecord.disabled
+  return admin.auth()
+   .updateUser(userID, {
+    displayName: ProfileDisplayName,
+    email: ProfileEmail,
+    phoneNumber: ProfilePhoneNumber,
+    photoURL: ProfilePhotoURL,
+    disabled: ProfileDisabled
    })
- })
+   .then(userRecord => {
+    return userRecord
+   })
+   .catch(error => error);
+
+
+ }).catch(error => { return error })
 })
+
 
 exports.administration = functions.https.onRequest(async (req, res) => {
  const userID = req.query.id;
 
  return cors(req, res, () => {
   admin.auth().setCustomUserClaims(userID, { admin: true });
-  res.status(200).send('Success');
+  res.status(200).send("Success");
  });
 });
-
-function updateName(id, status) {
- admin.auth().updateUser(id, {
-  displayName: status,
- })
-  .then(() => {
-   return
-  })
-  .catch((error) => {
-   console.log(error)
-   return error
-  })
-}
-
-function updateAvatar(id, status) {
- status = 'https://firebasestorage.googleapis.com/v0/b/my-app-dd6a6.appspot.com/o/profilePictures%2F' + status + '?alt=media';
- admin.auth().updateUser(id, {
-  photoURL: status,
- })
-  .then(() => {
-   return
-  })
-  .catch((error) => {
-   console.log(error)
-   return error
-  })
-}
-
-function updateEmail(id, status) {
- admin.auth().updateUser(id, {
-  email: status,
- })
-  .then(() => {
-   return
-  })
-  .catch((error) => {
-   console.log(error)
-   return error
-  })
-}
-
-function updatePhone(id, status) {
- if (status[0] === '8' || status[0] === '7') {
-  status = '+7' + status.slice(1)
- }
- admin.auth().updateUser(id, {
-  phoneNumber: status,
- })
-  .then(() => {
-   return
-  })
-  .catch((error) => {
-   console.log(error)
-   return error
-  })
-}
-
-exports.updateUserInformation = functions.https.onRequest(async (req, res) => {
- const userID = req.query.id;
- const name = req.query.name;
- const phone = req.query.phone;
- const email = req.query.email;
- const avatar = req.query.avatarURL;
-
- return cors(req, res, () => {
-  if (name === '0' ? false : true) { updateName(userID, name) }
-  if (email === '0' ? false : true) { updateEmail(userID, email) }
-  if (avatar === '0' ? false : true) { updateAvatar(userID, avatar) }
-  if (phone === '0' ? false : true) { updatePhone(userID, phone) }
- })
-})
 
 
 exports.AllUsers = functions.https.onRequest(async (req, res) => {
@@ -143,12 +106,13 @@ exports.AllUsers = functions.https.onRequest(async (req, res) => {
    .then((listUsersResult) => {
     listUsersResult.users.map((user) => {
      users[i] = user;
-     i++
-    })
+     i++;
+    });
     res.status(200).send(users);
-
+    return res.status(200).send(users);
    })
-   .catch((error) => { console.log(error) })
- })
-
-})
+   .catch((error) => {
+    console.log(error);
+   });
+ });
+});

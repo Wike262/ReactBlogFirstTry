@@ -1,115 +1,10 @@
 import React from 'react';
-import Author from '../author/author'
-import Statistic from '../statistic/statistic'
+import PostInline from './post-inline'
+import PostSingle from './post-single';
 
-import { Link } from 'react-router-dom'
-import ClipLoader from 'react-spinners/ClipLoader';
-import * as firebase from 'firebase/app';
-
-import 'firebase/firebase-firestore'
+import firebase from 'firebase'
 import './post.sass'
 import './post-mobile.sass'
-
-firebase.initializeApp({
- apiKey: 'AIzaSyAjyavp9xjnfj6mXmb9GfuQlSx64xaVl_Q',
- authDomain: 'my-app-dd6a6.firebaseapp.com',
- databaseURL: 'https://my-app-dd6a6.firebaseio.com',
- projectId: 'my-app-dd6a6',
- storageBucket: 'my-app-dd6a6.appspot.com',
- messagingSenderId: '404535255675',
- appId: '1:404535255675:web:bd0b11c177702760'
-})
-
-
-function PostSinglePage(post, author, modificClass, postID) {
- var style;
- style = {
-  backgroundImage: 'url(' + post.img + ')',
-  backgroundSize: 'cover',
-  backgroundPosition: '50%'
- }
- return (
-  <>
-   <div className='Post-Image' style={style} >
-    <img src={post.img} alt={'Post-Image-' + postID} />
-   </div>
-   <div className='Post-Tag'>
-    {post.tag instanceof Array ? post.tag.map((tag, i) => <a key={tag} href={post.tagLink[i]}>{post.tag[i]}{i === post.tag.length - 1 ? '' : ', '}</a>) : <a href={post.tagLink}>{post.tag}</a>}
-   </div>
-   <div className='Post-Title'>
-    <h1>{post.title}</h1>
-   </div>
-   <div className="Post-Content">
-    <p>{post.content}</p>
-   </div>
-   <div className="Post-AuthorDateWrapper">
-    <div className='Post-Author'>
-     <Author authorID={post.authorID} authorName={author.displayName} authorAvatar={author.photoURL} />
-    </div>
-    <div className='Post-Date'>
-     <p>{post.date}</p>
-    </div>
-   </div>
-   <div className='Post-Statistic'>
-    <Statistic likes={post.likes} view={post.view} comment={post.comments} />
-   </div>
-  </>
- )
-}
-
-function PostInline(post, author, modificClass, postID) {
-
- return (
-  <>
-   <div className='Post-Image'>
-    <Link to={{
-     pathname: '/posts/' + postID,
-     state: {
-      post: post,
-      author: author
-     }
-    }}>
-     <img src={post.img} alt={'Post-Image-' + postID} />
-    </Link>
-   </div>
-   <div className='Post-Tag'>
-    {post.tag instanceof Array ? post.tag.map((tag, i) => <a key={tag} href={post.tagLink[i]}>{post.tag[i]}{i === post.tag.length - 1 ? '' : ', '}</a>) : <a href={post.tagLink}>{post.tag}</a>}
-   </div>
-   <div className='Post-Title'>
-    <Link to={{
-     pathname: '/posts/' + postID,
-     state: {
-      post: post,
-      author: author
-     }
-    }}><h1>{post.title}</h1></Link>
-   </div>
-   <div className='Post-Description'>
-    <p>{post.description}</p>
-   </div>
-   <div className="Post-AuthorDateWrapper">
-    <div className='Post-Author'>
-     <Author authorID={post.authorID} authorName={author.displayName} authorAvatar={author.photoURL} />
-    </div>
-    <div className='Post-Date'>
-     <p>{post.date}</p>
-    </div>
-   </div>
-   <div className='Post-Statistic'>
-    <Statistic likes={post.likes} view={post.view} comment={post.comments} />
-   </div>
-   <div className='Post-Link Link'>
-    <Link to={{
-     pathname: '/posts/' + postID,
-     state: {
-      post: post,
-      author: author
-     }
-    }}>Continue reading ></Link>
-   </div>
-  </>
- )
-}
 
 class Post extends React.Component {
  constructor(props) {
@@ -117,65 +12,43 @@ class Post extends React.Component {
   this.state = {
    post: {},
    author: {},
-   Loading: true
   }
  }
 
- componentDidMount() {
-  if (!!this.props.post) {
-   console.log(this.props)
-   this.setState({
-    post: this.props.post,
-    author: this.props.author,
-    Loading: false
-   })
+ PostSinglePage(modClass) {
+  return <PostSingle post={this.props.post} authorID={this.props.authorID} modClass={this.props.modClass} />
+ }
+
+ Posts(modClass) {
+  let posts = []
+  for (let [key, value] of Object.entries(this.state.post)) {
+   posts.push(<PostInline post={value} author={value.authorID} modClass={modClass} id={key} key={key} />)
   }
-  else {
-   fetch('http://localhost:5000/my-app-dd6a6/us-central1/post?id=' + this.props.postID)
-    .then((response) => {
-     response.json()
-      .then((response) => {
-       this.setState({
-        post: response
-       })
-       fetch('http://localhost:5000/my-app-dd6a6/us-central1/author?id=' + this.state.post.authorID)
-        .then((response) => {
-         response.json()
-          .then((response) => {
-           this.setState({
-            author: response,
-            Loading: false
-           })
-          })
-        })
-      })
+  return posts
+ }
+
+ componentDidMount() {
+  if (this.props.modClass !== 'Post-SingleContent') {
+   firebase.functions().httpsCallable('posts')({ all: true })
+    .then(result => {
+     this.setState({
+      post: result.data,
+     })
     })
   }
  };
 
-
  render() {
-  const modificClass = !!this.props.modClass ? this.props.modClass : ' col-xl-4 col-md-6 col-12';
+  const modClass = !!this.props.modClass ? this.props.modClass : 'col-xl-4 col-md-6 col-12';
   return (
-   <article className={'Post-Wrapper ' + modificClass}>
-    <div className='Post'>
-     {
-      this.state.Loading
-       ?
-       <ClipLoader
-        size={70}
-        color={'gray'}
-        loading={this.state.Loading}
-       />
-       :
-       modificClass === 'Post-SingleContent' ?
-        PostSinglePage(this.state.post, this.state.author, modificClass, this.props.postID)
-        :
-        PostInline(this.state.post, this.state.author, modificClass, this.props.postID)
-     }
-
-    </div>
-   </article>
+   <>
+    {
+     modClass === 'Post-SingleContent' ?
+      this.PostSinglePage(modClass)
+      :
+      this.Posts(modClass)
+    }
+   </>
   )
  }
 }

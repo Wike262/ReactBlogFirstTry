@@ -13,6 +13,7 @@
    border-radius: 5px
    object-fit: cover
    transition: all .3s ease
+   width: 100%
    &:hover
     box-shadow: 0 0 10px rgba(0,0,0,.7)
  &-Tag
@@ -63,6 +64,8 @@
    font-weight: 500
  &-Date
   margin-left: 15px
+  p
+   margin-bottom: 3px
  &-AuthorDateWrapper
   display: flex
   align-items: flex-end
@@ -78,7 +81,11 @@
  &-Single
   .Post
    &-Wrapper
+    display: flex
+    min-height: 100vh
     margin: 0
+    .css-1ebv3k1
+     margin: auto
    &-Image
     position: relative
     display: flex

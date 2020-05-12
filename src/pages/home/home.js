@@ -20,7 +20,7 @@ const Home = () => {
       <div className='Section-Description col-12'>
        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country.</p>
       </div>
-      {posts.map((post, i) => <Post key={i} postID={post} />)}
+      <Post postID={posts} />
      </div>
     </div>
     <Footer />

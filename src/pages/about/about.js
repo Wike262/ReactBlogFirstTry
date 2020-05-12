@@ -4,14 +4,13 @@ import Background from '../../Img/author.webp'
 import '../page.sass'
 import '../page-mobile.sass'
 
-const about = () => {
+
+export default (props) => {
  return (
   <div className="Page-About">
    <div className="Content">
-    <Header mod='about' backgroundImg={Background} />
+    <Header {...props} mod='about' backgroundImg={Background} />
    </div>
   </div>
  )
 }
-
-export default about;

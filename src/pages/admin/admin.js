@@ -1,12 +1,12 @@
 import React from 'react';
 import Users from './admin-users/admin-users'
 import Posts from './admin-posts/admin-posts'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Switch, Route } from 'react-router-dom'
 
 import './admin.sass'
 import AdminMenu from './admin-menu/admin-menu'
 
-const Admin = (props) => {
+export default (props) => {
  return (
   <div className="AdminPanel container">
    <div className="row">
@@ -24,4 +24,3 @@ const Admin = (props) => {
  )
 }
 
-export default Admin;

@@ -2,7 +2,7 @@ import React from 'react';
 import { FaBars } from "react-icons/fa";
 import { FaTimes } from "react-icons/fa";
 import Logo from '../../Img/dotblog.png';
-import LoginStatus from '../login/login-status';
+import LoginStatus from '../login/_status/_status';
 import './menu.sass';
 import './menu-mobile.sass';
 import Navigation from './Navigation/Navigation';
