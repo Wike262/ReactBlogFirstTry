@@ -24,6 +24,7 @@ class PostInline extends React.Component {
    .then((result) => {
     this.setState({
      author: result.data,
+     loading: false
     });
    });
  }
