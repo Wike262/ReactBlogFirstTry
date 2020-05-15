@@ -4,7 +4,7 @@ import ClipLoader from 'react-spinners/ClipLoader';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { IoIosSettings } from 'react-icons/io';
 import { Link } from 'react-router-dom'
-import * as firebase from 'firebase/app';
+import firebase from 'firebase/app';
 
 import 'firebase/firebase-firestore';
 import 'firebaseui/dist/firebaseui.css';

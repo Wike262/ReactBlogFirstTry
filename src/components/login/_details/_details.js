@@ -175,24 +175,34 @@ class LoginAccountDetail extends React.Component {
       color={"gray"}
       loading={this.state.loading} /> : (
        <>
-        <h1>Welcome</h1>
-        <p>It's all off your information</p>
-        <form className='Account-Info'>
-         <div className={`Account-Role Role ${this.state.role}`} id='Role'>You'r status is: {this.state.role}</div>
 
-         <label className='Account-Info-Label Label' htmlFor='Name'>Name:</label>
+
+        <form className='Account-Info row '>
+         <div className="Welcome  col-12 ">
+          <div>
+           <h1>Welcome</h1>
+           <p>It's all off your information</p>
+          </div>
+          <div className={`Account-Role Role ${this.state.role}`} id='Role'>You'r status is: {this.state.role}</div>
+         </div>
+
+         <label className='Account-Info-Label Label col-12 col-lg-6' htmlFor='Name'>Name:
          <Input value={this.state.name} name='Name' id='Name' placeholder='First Name' />
+         </label>
 
-         <label className='Account-Info-Label Label' htmlFor='LastName'>Last-Name:</label>
+         <label className='Account-Info-Label Label col-12 col-lg-6' htmlFor='LastName'>Last-Name:
          <Input value={this.state.lastName} name='LastName' id='LastName' placeholder='Last Name' />
+         </label>
 
-         <label className='Account-Info-Label Label' htmlFor='Email'>E-mail:</label>
+         <label className='Account-Info-Label Label col-12 col-lg-6' htmlFor='Email'>E-mail:
          <Input value={this.state.email} name='Email' id='Email' placeholder='E-Mail' />
+         </label>
 
-         <label className='Account-Info-Label Label' htmlFor='Phone'>Phone:</label>
+         <label className='Account-Info-Label Label col-12 col-lg-6' htmlFor='Phone'>Phone:
          <Input value={this.state.phoneNumber} name='Phone' id='Phone' placeholder='Phone' />
+         </label>
 
-         <div className='Avatar-Wrapper'>
+         <div className='Avatar-Wrapper col-12 col-lg-6'>
           Avatar:
          <label className='Account-Info-Label Avatar-Label Label' htmlFor='Avatar'>
            <img className='Account-AvatarPhoto' id='AvatarPhoto' alt='Avatar' src={this.state.photo} />
@@ -202,9 +212,11 @@ class LoginAccountDetail extends React.Component {
 
          </div>
          {/* Buttons from Firebase to manage user account */}
-         <button className='Buttom-ResetPassword Button' onClick={this.resetPassword} id='ResetPassword'><FaCogs style={{ marginRight: '10px' }} />Reset password</button>
-         {/*  */}
+         <div className='Buttons col-lg-4'>
+          <button className='Buttom-ResetPassword Button' onClick={this.resetPassword} id='ResetPassword'><FaCogs style={{ marginRight: '10px' }} />Reset password</button>
+          {/*  */}
 
+         </div>
          <div className="Submit-Wrapper">
           <button type='Submit' onClick={e => this.updateInformation(e)} className='Submit-Button Button' id='Submit'>Submit</button>
          </div>

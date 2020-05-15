@@ -55,7 +55,9 @@ exports.posts = functions.https.onCall((data, context) => {
  return { error: 'NotSpecifietCalling' }
 });
 
+exports.updateUserClaims = functions.https.onCall((data, context) => {
 
+})
 
 exports.updateUserInformation = functions.https.onCall((data, context) => {
  const callingUserID = context.auth.uid
