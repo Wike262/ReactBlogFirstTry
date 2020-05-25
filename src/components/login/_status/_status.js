@@ -17,13 +17,14 @@ class LoginStatus extends React.Component {
  constructor(props) {
   super(props)
   this.state = {
-   Auth: '',
-   Token: '',
-   Avatar: '',
-   Name: '',
-   Admin: '',
-   Author: '',
-   Loading: true
+   author: {},
+   auth: '',
+   token: '',
+   avatar: '',
+   name: '',
+   admin: '',
+   role: '',
+   loading: true
   }
  }
 
@@ -36,29 +37,33 @@ class LoginStatus extends React.Component {
   firebase.auth().onAuthStateChanged((user) => {
    if (user) {
     user.getIdToken().then((accessToken) => {
+     let userHandler = {
+      photoURL: user.photoURL,
+      displayName: user.displayName
+     }
      this.setState({
-      Auth: true,
-      Token: user.uid,
-      Avatar: user.photoURL,
-      Name: user.displayName,
-      Loading: false
+      author: userHandler,
+      auth: true,
+      token: user.uid,
+      avatar: user.photoURL,
+      name: user.displayName,
+      loading: false
      })
      document.querySelector('.SingInOut').addEventListener('click', () => {
      })
      firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
       this.setState({
-       Admin: !!idTokenResult.claims.admin,
-       Author: !!idTokenResult.claims.author,
+       role: !!idTokenResult.claims.admin ? 'admin' : '' || !!idTokenResult.claims.author ? 'author' : '' || 'user',
       })
      })
     });
    } else {
     this.setState({
-     Auth: false.Auth,
-     Token: null,
-     Avatar: null,
-     Name: null,
-     Loading: false
+     auth: false.auth,
+     toke: null,
+     avatar: null,
+     name: null,
+     loading: false
     })
    }
   }, function (error) {
@@ -69,38 +74,43 @@ class LoginStatus extends React.Component {
 
  render() {
   return (
-   this.state.Loading ?
+   this.state.loading ?
     <ClipLoader sizeUnit={'px'}
      size={70}
      color={'gray'}
-     loading={this.state.Loading} />
+     loading={this.state.loading} />
     :
     <div className='Account'>
      <div className='Account-Status Status'>
       <div className='Account-Wrapper Wrapper'>
-       <Link to={'/author/' + this.state.Token}>
-        {this.state.Auth && <img className='Account-Avatar' src={
-         !!this.state.Avatar ?
-          this.state.Avatar
+       <Link to={{
+        pathname: `/authors/${this.state.token}`,
+        state: {
+         author: this.state.author
+        }
+       }}>
+        {this.state.auth && <img className='Account-Avatar' src={
+         !!this.state.avatar ?
+          this.state.avatar
           :
           noPhoto
         } alt='' />}
        </Link>
        <div className='Wrapper'>
-        <h3 className='Account-Name Name'>{this.state.Auth ? this.state.Name : ''}</h3>
+        <h3 className='Account-Name Name'>{this.state.auth ? this.state.name : ''}</h3>
         <div className='Account-Wrapper Wrapper'>
-         <Link onClick={this.singOut} to={this.state.Auth ? '/' : '/login'} className='Account-SingInOut SingInOut'>
-          {this.state.Auth ?
+         <Link onClick={this.singOut} to={this.state.auth ? '/' : '/login'} className='Account-SingInOut SingInOut'>
+          {this.state.auth ?
            'Sign Out ' : 'Sign In '}
           <FaSignOutAlt />
          </Link>
          <Link to={{
           pathname: '/account-details',
           state: {
-           Token: this.state.Token
+           Token: this.state.token
           }
          }} className='Account-Settings Settings'>
-          {this.state.Auth ?
+          {this.state.auth ?
            <div className='Wrapper' >Settigns <IoIosSettings /></div>
            : ''}
          </Link>
@@ -109,7 +119,7 @@ class LoginStatus extends React.Component {
       </div>
      </div>
      {
-      this.state.Admin ?
+      this.state.role === 'admin' ?
        <div className='Account-LinkToAdmin Link'>
         <Link to='/admin'>Go to admin panel</Link>
        </div>

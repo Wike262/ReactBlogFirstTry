@@ -5,9 +5,8 @@ import Post from '../../components/post/post'
 import '../page.sass'
 import '../page-mobile.sass'
 
-const posts = [0]
 
-const Home = () => {
+export default () => {
  return (
   <div className='Page-Home'>
    <div className='Content'>
@@ -20,7 +19,7 @@ const Home = () => {
       <div className='Section-Description col-12'>
        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country.</p>
       </div>
-      <Post postID={posts} />
+      <Post />
      </div>
     </div>
     <Footer />
@@ -29,4 +28,3 @@ const Home = () => {
  )
 }
 
-export default Home;

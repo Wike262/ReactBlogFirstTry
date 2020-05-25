@@ -11,7 +11,7 @@ admin.initializeApp({
 });
 
 firebase.initializeApp({
- apiKey: "AIzaSyAjyavp9xjnfj6mXmb9GfuQlSx64xaVl_Q",
+ apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
  authDomain: "my-app-dd6a6.firebaseapp.com",
  projectId: "my-app-dd6a6",
 });
@@ -27,16 +27,43 @@ exports.author = functions.https.onCall((data, context) => {
   .catch((error) => error);
 });
 
+
+exports.tagInfo = functions.https.onCall((data, context) => {
+ const tag = data.tag
+ const all = data.all || null
+ if (all === null) {
+  return db.collection('tags')
+   .doc(`${tag.toLowerCase()}`)
+   .get()
+   .then(doc => doc.data())
+   .catch(error => error)
+ }
+})
+
 exports.posts = functions.https.onCall((data, context) => {
  const postID = data.postID || null;
  const all = data.all || false;
-
+ const tag = data.tag || null
  if (postID !== null) {
   return db
    .collection("posts")
    .doc(`${postID}`)
    .get()
    .then((doc) => doc.data())
+   .catch((error) => error);
+ }
+ if (tag !== null) {
+  let posts = {};
+  return db
+   .collection("posts")
+   .where('tag', '==', `${tag.toLowerCase()}`)
+   .get()
+   .then((querySnapshot) =>
+    querySnapshot.forEach((doc) => (posts[`${doc.id}`] = doc.data()))
+   )
+   .then(() => {
+    return posts;
+   })
    .catch((error) => error);
  }
  if (all === true) {

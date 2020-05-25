@@ -7,7 +7,7 @@ import './menu.sass';
 import './menu-mobile.sass';
 import Navigation from './Navigation/Navigation';
 
-const Menu = () => {
+export default () => {
  const lin = [
   {
    link: '/',
@@ -19,11 +19,13 @@ const Menu = () => {
   },
   {
    link: '/tag/travel',
-   text: 'Travel'
+   text: 'Travel',
+   tag: 'Travel'
   },
   {
    link: '/tag/fashion',
-   text: 'Fashion'
+   text: 'Fashion',
+   tag: 'Fashion'
   },
   {
    link: '/about',
@@ -35,7 +37,7 @@ const Menu = () => {
   }
  ]
  return (
-  <React.Fragment>
+  <>
    <button onClick={handleClick} className="Menu-Mobile-Switcher"><FaBars /></button>
    <div className='Menu Menu-mobile-close'>
     <button onClick={handleClick} className="Menu-Mobile-Close"><FaTimes /></button>
@@ -47,7 +49,7 @@ const Menu = () => {
      </div>
     </div>
    </div>
-  </React.Fragment>
+  </>
  )
 }
 function handleClick() {
@@ -61,4 +63,3 @@ function handleClick() {
   menu.classList.add('Menu-mobile-close');
  }
 }
-export default Menu;

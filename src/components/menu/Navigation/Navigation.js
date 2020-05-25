@@ -2,7 +2,7 @@ import React from 'react'
 import NavLink from './NavigationLink';
 import './Navigation.sass';
 
-const Nav = (props) => {
+export default (props) => {
  return (
   <div className='Navigation-Wrapper'>
    {props.title &&
@@ -11,11 +11,10 @@ const Nav = (props) => {
 
    <ul className={'Navigation Navigation-' + props.mod} >
     {props.links.map((links, i) =>
-     <NavLink key={i} text={links.text} link={links.link} mod={props.mod} count={links.count} />
+     <NavLink key={i} text={links.text} link={links.link} mod={props.mod} count={links.count} tag={links.tag} />
     )}
    </ul>
   </div>
  )
 }
 
-export default Nav;

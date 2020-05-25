@@ -7,7 +7,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 import firebase from "firebase";
 
-class PostInline extends React.Component {
+class PostSingle extends React.Component {
  constructor(props) {
   super(props);
   this.state = {
@@ -77,4 +77,4 @@ class PostInline extends React.Component {
  }
 }
 
-export default PostInline;
+export default PostSingle;

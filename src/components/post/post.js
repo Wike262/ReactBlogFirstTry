@@ -1,20 +1,36 @@
 import React from 'react';
 import PostInline from './post-inline'
 import PostSingle from './post-single';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 import firebase from 'firebase'
 import './post.sass'
 import './post-mobile.sass'
 
+
+
 class Post extends React.Component {
  constructor(props) {
   super(props)
   this.state = {
+   tag: null,
    post: {},
    author: {},
+   loading: true,
   }
  }
 
+ componentDidUpdate(prevProps) {
+  if (prevProps.tag !== this.props.tag && prevProps.modClass !== 'Post-SingleContent') {
+   firebase.functions().httpsCallable('posts')({ tag: this.props.tag })
+    .then(result => {
+     this.setState({
+      post: result.data,
+      loading: false
+     })
+    })
+  }
+ }
  PostSinglePage(modClass) {
   return <PostSingle post={this.props.post} authorID={this.props.authorID} modClass={this.props.modClass} />
  }
@@ -28,14 +44,29 @@ class Post extends React.Component {
  }
 
  componentDidMount() {
-  if (this.props.modClass !== 'Post-SingleContent') {
-   firebase.functions().httpsCallable('posts')({ all: true })
+  if (!!this.props.tag) {
+   firebase.functions().httpsCallable('posts')({ tag: this.props.tag })
     .then(result => {
      this.setState({
       post: result.data,
+      loading: false
      })
     })
+  } else {
+   if (this.props.modClass !== 'Post-SingleContent') {
+    firebase.functions().httpsCallable('posts')({ all: true })
+     .then(result => {
+      this.setState({
+       post: result.data,
+       loading: false
+      })
+     })
+   }
+   else {
+    this.setState({ loading: false })
+   }
   }
+
  };
 
  render() {
@@ -43,10 +74,14 @@ class Post extends React.Component {
   return (
    <>
     {
-     modClass === 'Post-SingleContent' ?
-      this.PostSinglePage(modClass)
-      :
-      this.Posts(modClass)
+     this.state.loading ? <ClipLoader
+      size={70}
+      color={"gray"}
+      loading={this.state.loading} /> :
+      modClass === 'Post-SingleContent' ?
+       this.PostSinglePage(modClass)
+       :
+       this.Posts(modClass)
     }
    </>
   )
