@@ -25,7 +25,7 @@ class Post extends React.Component {
   ) {
    firebase
     .functions()
-    .httpsCallable('posts')({ tag: this.props.tag })
+    .httpsCallable('posts')({ tag: this.props.tag.name })
     .then((result) => {
      this.setState({
       post: result.data,
@@ -62,10 +62,12 @@ class Post extends React.Component {
 
  componentDidMount() {
   if (!!this.props.tag) {
+   console.log(this.props.tag.name);
    firebase
     .functions()
-    .httpsCallable('posts')({ tag: this.props.tag })
+    .httpsCallable('posts')({ tag: this.props.tag.name })
     .then((result) => {
+     console.log(result);
      this.setState({
       post: result.data,
       loading: false,

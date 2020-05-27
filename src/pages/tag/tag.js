@@ -3,45 +3,68 @@ import React from 'react';
 import Header from '../../components/header/header';
 import Error404 from '../../components/errors/404/404';
 import Post from '../../components/post/post';
+import ClipLoader from 'react-spinners/ClipLoader';
+
+import firebase from 'firebase';
+import 'firebase/functions';
+
 class Tags extends React.Component {
  constructor(props) {
   super(props);
   this.state = {
    tag: !!this.props.location.state ? this.props.location.state.tag : null,
    loading: true,
+   tagData: {},
   };
-  this.updateState = this.updateState.bind(this);
  }
- updateState() {
-  this.setState({
-   loading: false,
-  });
+
+ componentDidUpdate(prevProps) {
+  if (
+   this.state.tag !== null &&
+   prevProps.location.state.tag !== this.props.location.state.tag
+  ) {
+   firebase
+    .functions()
+    .httpsCallable('tagInfo')({ tag: this.props.location.state.tag })
+    .then((result) => {
+     console.log(result);
+     this.setState({
+      tagData: result,
+      loading: false,
+     });
+    });
+  }
+ }
+
+ componentDidMount() {
+  if (this.state.tag !== null) {
+   console.log(this.state.tag);
+   firebase
+    .functions()
+    .httpsCallable('tagInfo')({ tag: this.props.location.state.tag })
+    .then((result) => {
+     this.setState({
+      tagData: result.data,
+      loading: false,
+     });
+    });
+  } else {
+   this.setState({ loading: false });
+  }
  }
  render() {
   if (this.state.tag !== null) {
    return (
     <div className='Page-Tag'>
      <div className='Content'>
-      <Header
-       loadingParent={this.updateState}
-       tag={this.props.location.state.tag}
-      />
       {this.state.loading ? (
-       ''
+       <ClipLoader size={70} color={'gray'} loading={this.state.loading} />
       ) : (
        <>
+        <Header tag={this.state.tagData} />
         <div className='Section-Wrapper Articles container'>
          <div className='Section Section-Tag  row'>
-          <div className='Section-Title col-12'>
-           <h2>Articles</h2>
-          </div>
-          <div className='Section-Description col-12'>
-           <p>
-            A small river named Duden flows by their place and supplies it with
-            the necessary regelialia. It is a paradisematic country.
-           </p>
-          </div>
-          <Post tag={this.props.location.state.tag} />
+          <Post tag={this.state.tagData} />
          </div>
         </div>
        </>

@@ -1,19 +1,19 @@
-var admin = require("firebase-admin");
-var functions = require("firebase-functions");
+var admin = require('firebase-admin');
+var functions = require('firebase-functions');
 
-var nodemailer = require("nodemailer");
-var firebase = require("firebase");
+var nodemailer = require('nodemailer');
+var firebase = require('firebase');
 
 admin.initializeApp({
  credential: admin.credential.applicationDefault(),
- databaseURL: "https://my-app-dd6a6.firebaseio.com",
- storageBucket: "my-app-dd6a6.appspot.com",
+ databaseURL: 'https://my-app-dd6a6.firebaseio.com',
+ storageBucket: 'my-app-dd6a6.appspot.com',
 });
 
 firebase.initializeApp({
  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
- authDomain: "my-app-dd6a6.firebaseapp.com",
- projectId: "my-app-dd6a6",
+ authDomain: 'my-app-dd6a6.firebaseapp.com',
+ projectId: 'my-app-dd6a6',
 });
 let db = firebase.firestore();
 
@@ -27,26 +27,38 @@ exports.author = functions.https.onCall((data, context) => {
   .catch((error) => error);
 });
 
-
 exports.tagInfo = functions.https.onCall((data, context) => {
- const tag = data.tag
- const all = data.all || null
+ const tag = data.tag;
+ const all = data.all || null;
  if (all === null) {
-  return db.collection('tags')
+  return db
+   .collection('tags')
    .doc(`${tag.toLowerCase()}`)
    .get()
-   .then(doc => doc.data())
-   .catch(error => error)
+   .then((doc) => doc.data())
+   .catch((error) => error);
+ } else {
+  let tags = {};
+  return db
+   .collection('tags')
+   .get()
+   .then((querySnapshot) =>
+    querySnapshot.forEach((doc) => (tags[`${doc.id}`] = doc.data())),
+   )
+   .then(() => {
+    return tags;
+   })
+   .catch((error) => error);
  }
-})
+});
 
 exports.posts = functions.https.onCall((data, context) => {
  const postID = data.postID || null;
  const all = data.all || false;
- const tag = data.tag || null
+ const tag = data.tag || null;
  if (postID !== null) {
   return db
-   .collection("posts")
+   .collection('posts')
    .doc(`${postID}`)
    .get()
    .then((doc) => doc.data())
@@ -55,11 +67,13 @@ exports.posts = functions.https.onCall((data, context) => {
  if (tag !== null) {
   let posts = {};
   return db
-   .collection("posts")
-   .where('tag', '==', `${tag.toLowerCase()}`)
+   .collection('posts')
+   .where('tag', '==', `${tag}`)
    .get()
    .then((querySnapshot) =>
-    querySnapshot.forEach((doc) => (posts[`${doc.id}`] = doc.data()))
+    querySnapshot.forEach((doc) => {
+     posts[`${doc.id}`] = doc.data();
+    }),
    )
    .then(() => {
     return posts;
@@ -69,59 +83,60 @@ exports.posts = functions.https.onCall((data, context) => {
  if (all === true) {
   let posts = {};
   return db
-   .collection("posts")
+   .collection('posts')
    .get()
    .then((querySnapshot) =>
-    querySnapshot.forEach((doc) => (posts[`${doc.id}`] = doc.data()))
+    querySnapshot.forEach((doc) => (posts[`${doc.id}`] = doc.data())),
    )
    .then(() => {
     return posts;
    })
    .catch((error) => error);
  }
- return { error: 'NotSpecifietCalling' }
+ return { error: 'NotSpecifietCalling' };
 });
 
-exports.updateUserClaims = functions.https.onCall((data, context) => {
-
-})
+exports.updateUserClaims = functions.https.onCall((data, context) => {});
 
 exports.updateUserInformation = functions.https.onCall((data, context) => {
- const callingUserID = context.auth.uid
- const userID = data.uid
- return admin.auth().getUser(userID).then((userRecord) => {
-  const ProfileDisplayName = data.name || userRecord.displayName
-  const ProfilePhoneNumber = data.phone || userRecord.phoneNumber
-  const ProfileEmail = data.email || userRecord.email
-  const ProfilePhotoURL = data.avatarURL || userRecord.photoURL
-  const ProfileDisabled = data.disabled || userRecord.disabled
-  return admin.auth()
-   .updateUser(userID, {
-    displayName: ProfileDisplayName,
-    email: ProfileEmail,
-    phoneNumber: ProfilePhoneNumber,
-    photoURL: ProfilePhotoURL,
-    disabled: ProfileDisabled
-   })
-   .then(userRecord => {
-    return userRecord
-   })
-   .catch(error => error);
-
-
- }).catch(error => { return error })
-})
-
+ const callingUserID = context.auth.uid;
+ const userID = data.uid;
+ return admin
+  .auth()
+  .getUser(userID)
+  .then((userRecord) => {
+   const ProfileDisplayName = data.name || userRecord.displayName;
+   const ProfilePhoneNumber = data.phone || userRecord.phoneNumber;
+   const ProfileEmail = data.email || userRecord.email;
+   const ProfilePhotoURL = data.avatarURL || userRecord.photoURL;
+   const ProfileDisabled = data.disabled || userRecord.disabled;
+   return admin
+    .auth()
+    .updateUser(userID, {
+     displayName: ProfileDisplayName,
+     email: ProfileEmail,
+     phoneNumber: ProfilePhoneNumber,
+     photoURL: ProfilePhotoURL,
+     disabled: ProfileDisabled,
+    })
+    .then((userRecord) => {
+     return userRecord;
+    })
+    .catch((error) => error);
+  })
+  .catch((error) => {
+   return error;
+  });
+});
 
 exports.administration = functions.https.onRequest(async (req, res) => {
  const userID = req.query.id;
 
  return cors(req, res, () => {
   admin.auth().setCustomUserClaims(userID, { admin: true });
-  res.status(200).send("Success");
+  res.status(200).send('Success');
  });
 });
-
 
 exports.AllUsers = functions.https.onRequest(async (req, res) => {
  var users = [];
