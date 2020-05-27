@@ -1,10 +1,9 @@
 import React from 'react';
-import Header from '../../components/header/header'
-import Footer from '../../components/footer/footer'
-import Post from '../../components/post/post'
-import '../page.sass'
-import '../page-mobile.sass'
-
+import Header from '../../components/header/header';
+import Footer from '../../components/footer/footer';
+import Post from '../../components/post/post';
+import '../page.sass';
+import '../page-mobile.sass';
 
 export default () => {
  return (
@@ -14,10 +13,13 @@ export default () => {
     <div className='Section-Wrapper Articles container'>
      <div className='Section row'>
       <div className='Section-Title col-12'>
-       <h2>Articles</h2>
+       <h2>Статьи</h2>
       </div>
       <div className='Section-Description col-12'>
-       <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country.</p>
+       <p>
+        Здесь вы можете найти статьи на совершенно различные темы. Удачи в
+        поисках!
+       </p>
       </div>
       <Post />
      </div>
@@ -25,6 +27,5 @@ export default () => {
     <Footer />
    </div>
   </div>
- )
-}
-
+ );
+};

@@ -1,13 +1,13 @@
 import React from 'react';
 import * as firebase from 'firebase/app';
-import 'firebase/firebase-firestore'
-import * as firebaseui from 'firebaseui'
-import 'firebaseui/dist/firebaseui.css'
+import 'firebase/firebase-firestore';
+import * as firebaseui from 'firebaseui';
+import 'firebaseui/dist/firebaseui.css';
 
 class Login extends React.Component {
  constructor(props) {
   super(props);
-  this.state = {}
+  this.state = {};
  }
  componentDidMount() {
   // FirebaseUI config.
@@ -26,7 +26,7 @@ class Login extends React.Component {
    // Privacy policy url/callback.
    privacyPolicyUrl: function () {
     window.location.assign('/privacy-policy');
-   }
+   },
   };
   // Initialize the FirebaseUI Widget using Firebase.
   var ui = new firebaseui.auth.AuthUI(firebase.auth());
@@ -36,12 +36,10 @@ class Login extends React.Component {
  render() {
   return (
    <>
-    <h1>Welcome to My Awesome App</h1>
-    <div id="firebaseui-auth-container"></div>
+    <div id='firebaseui-auth-container'></div>
    </>
-  )
+  );
  }
-
 }
 
 export default Login;
