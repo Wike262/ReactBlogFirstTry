@@ -23,13 +23,15 @@ class Tags extends React.Component {
    this.state.tag !== null &&
    prevProps.location.state.tag !== this.props.location.state.tag
   ) {
+   this.setState({
+    loading: true,
+   });
    firebase
     .functions()
     .httpsCallable('tagInfo')({ tag: this.props.location.state.tag })
     .then((result) => {
-     console.log(result);
      this.setState({
-      tagData: result,
+      tagData: result.data,
       loading: false,
      });
     });
@@ -38,7 +40,6 @@ class Tags extends React.Component {
 
  componentDidMount() {
   if (this.state.tag !== null) {
-   console.log(this.state.tag);
    firebase
     .functions()
     .httpsCallable('tagInfo')({ tag: this.props.location.state.tag })

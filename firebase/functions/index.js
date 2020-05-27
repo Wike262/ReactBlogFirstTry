@@ -30,14 +30,20 @@ exports.author = functions.https.onCall((data, context) => {
 exports.tagInfo = functions.https.onCall((data, context) => {
  const tag = data.tag;
  const all = data.all || null;
- if (all === null) {
+ const count = data.count || null;
+
+ if (count === true) {
+  let counting = 0;
   return db
    .collection('tags')
-   .doc(`${tag.toLowerCase()}`)
    .get()
-   .then((doc) => doc.data())
+   .then((querySnapshot) => querySnapshot.forEach((doc) => counting++))
+   .then(() => {
+    return counting;
+   })
    .catch((error) => error);
- } else {
+ }
+ if (all !== null) {
   let tags = {};
   return db
    .collection('tags')
@@ -49,6 +55,13 @@ exports.tagInfo = functions.https.onCall((data, context) => {
     return tags;
    })
    .catch((error) => error);
+ } else {
+  return db
+   .collection('tags')
+   .doc(`${tag.toLowerCase()}`)
+   .get()
+   .then((doc) => doc.data())
+   .catch((error) => error);
  }
 });
 
@@ -56,6 +69,7 @@ exports.posts = functions.https.onCall((data, context) => {
  const postID = data.postID || null;
  const all = data.all || false;
  const tag = data.tag || null;
+ const count = data.count || null;
  if (postID !== null) {
   return db
    .collection('posts')
@@ -90,6 +104,17 @@ exports.posts = functions.https.onCall((data, context) => {
    )
    .then(() => {
     return posts;
+   })
+   .catch((error) => error);
+ }
+ if (count === true) {
+  let counting = 0;
+  return db
+   .collection('posts')
+   .get()
+   .then((querySnapshot) => querySnapshot.forEach((doc) => counting++))
+   .then(() => {
+    return counting;
    })
    .catch((error) => error);
  }
@@ -138,25 +163,15 @@ exports.administration = functions.https.onRequest(async (req, res) => {
  });
 });
 
-exports.AllUsers = functions.https.onRequest(async (req, res) => {
- var users = [];
+exports.allUsers = functions.https.onCall((data, contex) => {
+ const count = data.count || null;
 
- var i = 0;
-
- return cors(req, res, () => {
-  return admin
-   .auth()
-   .listUsers()
-   .then((listUsersResult) => {
-    listUsersResult.users.map((user) => {
-     users[i] = user;
-     i++;
-    });
-    res.status(200).send(users);
-    return res.status(200).send(users);
-   })
-   .catch((error) => {
-    console.log(error);
-   });
- });
+ return admin
+  .auth()
+  .listUsers()
+  .then((listUsersResult) => {
+   if (count === true) return listUsersResult.users.length;
+   else return listUsersResult.users;
+  })
+  .catch((error) => error);
 });

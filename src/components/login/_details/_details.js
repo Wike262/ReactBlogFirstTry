@@ -208,7 +208,9 @@ class LoginAccountDetail extends React.Component {
   return (
    <div className='Account-Details'>
     {!!this.state.loading ? (
-     <ClipLoader size={70} color={'gray'} loading={this.state.loading} />
+     <div className='Handler-Loading'>
+      <ClipLoader size={70} color={'gray'} loading={this.state.loading} />
+     </div>
     ) : (
      <>
       <form className='Account-Info row '>
