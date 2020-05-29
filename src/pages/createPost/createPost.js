@@ -24,6 +24,7 @@ class CreatePosts extends React.Component {
    content: null,
    tag: null,
    tags: null,
+   tagName: null,
    description: null,
    img: null,
   };
@@ -66,6 +67,7 @@ class CreatePosts extends React.Component {
      firebase
       .functions()
       .httpsCallable('addPost')({
+       tagName: this.state.tagName,
        content: this.state.content,
        date: this.state.date,
        description: this.state.description,
@@ -137,6 +139,7 @@ class CreatePosts extends React.Component {
   e.target.classList.add('Tags-Buttons-Selected');
   this.setState({
    tag: e.target.innerHTML,
+   tagName: e.target.dataset.tag,
   });
  }
 
@@ -144,7 +147,12 @@ class CreatePosts extends React.Component {
   let tags = [];
   for (let [key, value] of Object.entries(this.state.tags)) {
    tags.push(
-    <button onClick={this.tagSelect} key={key} className='Tags-Buttons'>
+    <button
+     data-tag={key}
+     onClick={this.tagSelect}
+     key={key}
+     className='Tags-Buttons'
+    >
      {value.name}
     </button>,
    );

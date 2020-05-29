@@ -79,6 +79,7 @@ exports.posts = functions.https.onCall((data, context) => {
  const all = data.all || false;
  const tag = data.tag || null;
  const count = data.count || null;
+ const page = data.page || null;
  if (postID !== null) {
   return db
    .collection('posts')
@@ -89,19 +90,40 @@ exports.posts = functions.https.onCall((data, context) => {
  }
  if (tag !== null) {
   let posts = {};
-  return db
-   .collection('posts')
-   .where('tag', '==', `${tag}`)
-   .get()
-   .then((querySnapshot) =>
-    querySnapshot.forEach((doc) => {
-     posts[`${doc.id}`] = doc.data();
-    }),
-   )
-   .then(() => {
-    return posts;
-   })
-   .catch((error) => error);
+  if (page !== null) {
+   let posts = {};
+   let i = 0;
+   return db
+    .collection('posts')
+    .where('tag', '==', `${tag}`)
+    .get()
+    .then((querySnapshot) =>
+     querySnapshot.forEach((doc) => {
+      if (i < page * 6 && i >= (page === 1 ? 0 : page * 6 - (page - 1) * 6)) {
+       posts[`${doc.id}`] = doc.data();
+      }
+      i++;
+     }),
+    )
+    .then(() => {
+     return posts;
+    })
+    .catch((error) => error);
+  } else {
+   return db
+    .collection('posts')
+    .where('tag', '==', `${tag}`)
+    .get()
+    .then((querySnapshot) =>
+     querySnapshot.forEach((doc) => {
+      posts[`${doc.id}`] = doc.data();
+     }),
+    )
+    .then(() => {
+     return posts;
+    })
+    .catch((error) => error);
+  }
  }
  if (all === true) {
   let posts = {};
@@ -110,6 +132,25 @@ exports.posts = functions.https.onCall((data, context) => {
    .get()
    .then((querySnapshot) =>
     querySnapshot.forEach((doc) => (posts[`${doc.id}`] = doc.data())),
+   )
+   .then(() => {
+    return posts;
+   })
+   .catch((error) => error);
+ }
+ if (page !== null) {
+  let posts = {};
+  let i = 0;
+  return db
+   .collection('posts')
+   .get()
+   .then((querySnapshot) =>
+    querySnapshot.forEach((doc) => {
+     if (i < page * 6 && i >= (page - 1) * 6) {
+      posts[`${doc.id}`] = doc.data();
+     }
+     i++;
+    }),
    )
    .then(() => {
     return posts;
@@ -193,6 +234,7 @@ exports.addPost = functions.https.onCall((data, context) => {
  const img = data.img;
  const authorID = context.auth.uid;
  const date = data.date;
+ const tagName = data.tagName;
  console.log(data);
  return db
   .collection('posts')
@@ -206,6 +248,12 @@ exports.addPost = functions.https.onCall((data, context) => {
    title,
   })
   .then(() => {
-   return 'ol';
+   return db
+    .collection('tags')
+    .doc(`${tagName}`)
+    .update({ count: firebase.firestore.FieldValue.increment(1) })
+    .then(() => {
+     return 'ok';
+    });
   });
 });

@@ -65,7 +65,10 @@ class Tags extends React.Component {
         <Header tag={this.state.tagData} />
         <div className='Section-Wrapper Articles container'>
          <div className='Section Section-Tag  row'>
-          <Post tag={this.state.tagData} />
+          <Post
+           tag={this.state.tagData}
+           tagName={this.props.location.state.tag}
+          />
          </div>
         </div>
        </>
