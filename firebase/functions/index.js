@@ -18,13 +18,22 @@ firebase.initializeApp({
 let db = firebase.firestore();
 
 exports.author = functions.https.onCall((data, context) => {
- const id = data.id;
-
- return admin
-  .auth()
-  .getUser(id)
-  .then((userRecord) => userRecord)
-  .catch((error) => error);
+ const id = data.id || null;
+ const uid = context.auth.uid || null;
+ if (id !== null) {
+  return admin
+   .auth()
+   .getUser(id)
+   .then((userRecord) => userRecord)
+   .catch((error) => error);
+ }
+ if (uid !== null) {
+  return admin
+   .auth()
+   .getUser(uid)
+   .then((userRecord) => userRecord)
+   .catch((error) => error);
+ }
 });
 
 exports.tagInfo = functions.https.onCall((data, context) => {
@@ -163,7 +172,7 @@ exports.administration = functions.https.onRequest(async (req, res) => {
  });
 });
 
-exports.allUsers = functions.https.onCall((data, contex) => {
+exports.allUsers = functions.https.onCall((data, context) => {
  const count = data.count || null;
 
  return admin
@@ -174,4 +183,29 @@ exports.allUsers = functions.https.onCall((data, contex) => {
    else return listUsersResult.users;
   })
   .catch((error) => error);
+});
+
+exports.addPost = functions.https.onCall((data, context) => {
+ const title = data.title;
+ const tag = data.tag;
+ const content = data.content;
+ const description = data.description;
+ const img = data.img;
+ const authorID = context.auth.uid;
+ const date = data.date;
+ console.log(data);
+ return db
+  .collection('posts')
+  .add({
+   authorID,
+   content,
+   date,
+   description,
+   img,
+   tag,
+   title,
+  })
+  .then(() => {
+   return 'ol';
+  });
 });

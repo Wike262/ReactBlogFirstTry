@@ -1,0 +1,98 @@
+@import '../../components/var'
+
+.Creating-Post
+ display: flex
+ justify-content: center
+ align-items: center
+ height: 100vh
+ width: 100%
+ color: #000000
+ height: 100vh
+ font-size: 20px
+ flex-direction: column
+ position: relative
+ padding: 0 20px
+ .Tags-Open
+  border-radius: 5px 5px 0 0 
+ .Button-Tags
+  display: flex
+  justify-content: center
+  align-items: center
+  margin-bottom: 0
+  >div
+   margin-left: 10px
+ >div
+  width: 100%
+ .Button
+  color: #000000
+ h1
+  font-size: 26px
+  font-weight: bold
+ &-Wrapper
+  position: fixed
+  z-index: 1000
+  background: #ffffff
+  width: 23vw
+  height: 100vh
+  top: 0
+  left: 0
+  transition: all .3s ease
+  &-closed
+   left: -25vw
+   .Creating-Post-Button-close
+    visibility: hidden
+   .Creating-Post-Button-open
+    visibility: visible 
+ &-Button 
+  top: .2em
+  left: .2em
+  position: fixed
+  z-index: 2
+  background: #ffffff
+  border-radius: 5px
+  border: none
+  font-size: 30px
+  transition: all .3s ease
+  &-Submit
+   position: relative
+   background: $PC
+   padding: 10px 15px
+   font-size: 20px
+   color: #ffffff
+   font-weight: bold
+ &-Button-open
+  visibility: hidden
+ .Tags
+  display: flex
+  flex-wrap: wrap
+  background: rgb(239, 239, 239)
+  border-radius: 0 0 5px 5px
+  &-Hidden
+   display: none
+  &-Buttons
+   font-size: 16px
+   padding: 5px 15px
+   margin: 7px
+   border: none
+   background: #ffffff
+   display: flex
+   justify-content: center
+   align-items: center
+   position: relative
+   &:before
+    margin-right: 5px
+    content: ''
+    display: block
+    width: 15px
+    height: 15px
+    border: 1px solid #000000
+    border-radius: 3px
+   &-Selected
+    &:after
+     content: ''
+     left: 20px
+     display: block
+     position: absolute
+     height: 5px
+     width: 5px
+     background: #000000

@@ -12,7 +12,7 @@ class Post extends React.Component {
   super(props);
   this.state = {
    tag: null,
-   post: {},
+   post: this.props.creatingPost || {},
    author: {},
    loading: true,
   };
@@ -33,13 +33,24 @@ class Post extends React.Component {
      });
     });
   }
+  if (prevProps.creatingPost !== this.props.creatingPost) {
+   this.setState({
+    post: this.props.creatingPost,
+   });
+  }
  }
  PostSinglePage(modClass) {
-  return (
+  return this.props.creating !== 'true' ? (
    <PostSingle
     post={this.props.post}
     authorID={this.props.authorID}
     modClass={this.props.modClass}
+   />
+  ) : (
+   <PostSingle
+    post={this.state.post}
+    modClass={this.props.modClass}
+    creating='true'
    />
   );
  }
@@ -73,15 +84,17 @@ class Post extends React.Component {
     });
   } else {
    if (this.props.modClass !== 'Post-SingleContent') {
-    firebase
-     .functions()
-     .httpsCallable('posts')({ all: true })
-     .then((result) => {
-      this.setState({
-       post: result.data,
-       loading: false,
+    if (this.props.creating !== 'true') {
+     firebase
+      .functions()
+      .httpsCallable('posts')({ all: true })
+      .then((result) => {
+       this.setState({
+        post: result.data,
+        loading: false,
+       });
       });
-     });
+    }
    } else {
     this.setState({ loading: false });
    }

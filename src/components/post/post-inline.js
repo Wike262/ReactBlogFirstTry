@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import Author from '../author/author';
-import Statistic from '../statistic/statistic';
 
 import ClipLoader from 'react-spinners/ClipLoader';
 
@@ -86,9 +85,6 @@ class PostInline extends React.Component {
        <div className='Post-Date'>
         <p>{post.date}</p>
        </div>
-      </div>
-      <div className='Post-Statistic'>
-       <Statistic likes={post.likes} view={post.view} comment={post.comments} />
       </div>
       <div className='Post-Link Link'>
        <Link

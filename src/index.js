@@ -17,6 +17,7 @@ import Tags from './pages/tag/tags';
 import Contact from './pages/contact/contact';
 import Single from './pages/single_post/single';
 import Admin from './pages/admin/admin';
+import CreatePost from './pages/createPost/createPost';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -46,6 +47,7 @@ ReactDOM.render(
      path={'/posts/:postID'}
      component={(props) => <Single {...props} />}
     />
+    <Route path='/createpost' component={CreatePost} />
     <Route path='/admin' component={Admin} />
 
     <Route component={error} />

@@ -21,7 +21,7 @@ export default (props) => {
     <img src={!!author.photoURL ? author.photoURL : noPhoto} alt='' />
    </div>
    <div className='Author-Name'>
-    <p>Написанно:</p>
+    <p>Автор:</p>
     <h2>{author.displayName} ,</h2>
    </div>
   </Link>

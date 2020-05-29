@@ -8,7 +8,7 @@ import { FaCogs } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
-import * as firebase from 'firebase';
+import firebase from 'firebase';
 import 'firebase/firebase-firestore';
 import 'firebase/storage';
 import 'firebaseui/dist/firebaseui.css';

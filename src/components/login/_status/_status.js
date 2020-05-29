@@ -149,6 +149,13 @@ class LoginStatus extends React.Component {
     ) : (
      ''
     )}
+    {this.state.role === 'author' || this.state.role === 'admin' ? (
+     <div className='Account-CreatePosts-Link Link'>
+      <Link to='/createpost'>Написать статью</Link>
+     </div>
+    ) : (
+     ''
+    )}
    </div>
   );
  }
