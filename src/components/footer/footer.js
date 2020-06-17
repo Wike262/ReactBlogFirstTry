@@ -7,51 +7,51 @@ import './footer-mobile.sass';
 const footer = () => {
  const lin = [
   {
-   link: '/tag/study',
-   text: 'Обучение',
-   count: '8',
+   link: '/tag/education',
+   text: 'Образование',
+   tag: 'education',
   },
   {
    link: '/tag/fashion',
    text: 'Мода',
-   count: '8',
+   tag: 'fashion',
   },
   {
    link: '/tag/technology',
    text: 'Технологии',
-   count: '2',
+   tag: 'technology',
   },
   {
    link: '/tag/travel',
    text: 'Путешествия',
-   count: '2',
+   tag: 'travel',
   },
  ];
  const arch = [
   {
-   link: '/archive/10.2018',
-   text: 'Октябрь 2018',
-   count: '6',
+   link: '/archive/2.2020',
+   text: 'Ферваль 2020',
+   date: '2.2020',
   },
   {
-   link: '/archive/09.2018',
-   text: 'Сентябрь 2018',
-   count: '6',
+   link: '/archive/3.2020',
+   text: 'Март 2020',
+   date: '3.2020',
   },
   {
-   link: '/archive/08.2018',
-   text: 'Август 2018',
-   count: '8',
+   link: '/archive/4.2020',
+   text: 'Апрель 2020',
+   date: '4.2020',
   },
   {
-   link: '/archive/07.2018',
-   text: 'Июнь 2018',
-   count: '2',
+   link: '/archive/5.2020',
+   text: 'Май 2020',
+   date: '5.2020',
   },
   {
-   link: '/archive/06.2018',
-   text: 'Июль 2018',
-   count: '7',
+   link: '/archive/6.2020',
+   text: 'Июнь 2020',
+   date: '6.2020',
   },
  ];
  return (

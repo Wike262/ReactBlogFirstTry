@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import Post from '../../components/post/post';
+import About from '../about/about';
 import '../page.sass';
 import '../page-mobile.sass';
 
@@ -24,6 +25,7 @@ export default () => {
       <Post />
      </div>
     </div>
+    <About home='true' />
     <Footer />
    </div>
   </div>

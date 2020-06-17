@@ -24,15 +24,37 @@ export default (props) => {
    </li>
   );
  } else {
-  return (
-   <li
-    className={
-     'Navigation-Link Navigation-Link-' + props.mod + ' NavigationLink '
-    }
-   >
-    <Link to={props.link}>{props.text}</Link>
-    {props.count > 0 && <span>({props.count})</span>}
-   </li>
-  );
+  if (props.date) {
+   return (
+    <li
+     className={
+      'Navigation-Link Navigation-Link-' + props.mod + ' NavigationLink '
+     }
+    >
+     <Link
+      to={{
+       pathname: props.link,
+       state: {
+        date: props.date,
+       },
+      }}
+     >
+      {props.text}
+     </Link>
+     {props.count > 0 && <span>({props.count})</span>}
+    </li>
+   );
+  } else {
+   return (
+    <li
+     className={
+      'Navigation-Link Navigation-Link-' + props.mod + ' NavigationLink '
+     }
+    >
+     <Link to={props.link}>{props.text}</Link>
+     {props.count > 0 && <span>({props.count})</span>}
+    </li>
+   );
+  }
  }
 };

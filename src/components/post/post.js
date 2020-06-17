@@ -78,37 +78,6 @@ class Post extends React.Component {
     });
   }
  }
- PostSinglePage(modClass) {
-  return this.props.creating !== 'true' ? (
-   <PostSingle
-    post={this.props.post}
-    authorID={this.props.authorID}
-    modClass={this.props.modClass}
-   />
-  ) : (
-   <PostSingle
-    post={this.state.post}
-    modClass={this.props.modClass}
-    creating='true'
-   />
-  );
- }
-
- Posts(modClass) {
-  let posts = [];
-  for (let [key, value] of Object.entries(this.state.post)) {
-   posts.push(
-    <PostInline
-     post={value}
-     author={value.authorID}
-     modClass={modClass}
-     id={key}
-     key={key}
-    />,
-   );
-  }
-  return posts;
- }
 
  componentDidMount() {
   if (!!this.props.tag) {
@@ -141,13 +110,11 @@ class Post extends React.Component {
        this.setState({
         count: result.data,
        });
-       console.log(result.data);
        if (result.data > 6) {
         firebase
          .functions()
          .httpsCallable('posts')({ page: 1 })
          .then((result) => {
-          console.log(result.data);
           this.setState({
            post: result.data,
            loading: false,
@@ -170,6 +137,37 @@ class Post extends React.Component {
     this.setState({ loading: false });
    }
   }
+ }
+ PostSinglePage(modClass) {
+  return this.props.creating !== 'true' ? (
+   <PostSingle
+    post={this.props.post}
+    authorID={this.props.authorID}
+    modClass={this.props.modClass}
+   />
+  ) : (
+   <PostSingle
+    post={this.state.post}
+    modClass={this.props.modClass}
+    creating='true'
+   />
+  );
+ }
+
+ Posts(modClass) {
+  let posts = [];
+  for (let [key, value] of Object.entries(this.state.post)) {
+   posts.push(
+    <PostInline
+     post={value}
+     author={value.authorID}
+     modClass={modClass}
+     id={key}
+     key={key}
+    />,
+   );
+  }
+  return posts;
  }
  changePage(e) {
   this.setState({

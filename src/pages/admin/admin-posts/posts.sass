@@ -1,0 +1,94 @@
+@import '../../../components/var'
+.Close-Popup,.Close-Popup-Delete
+ background: none
+ border: none
+ position: absolute
+ top: 25px
+ right: 25px
+ font-size: 25px
+ cursor: pointer
+
+.Popup,.Popup-Delete,.PopupCreate
+ position: absolute
+ top: 0
+ display: none
+ z-index: 1000
+ background: #ffffff
+ padding: 35px 45px
+ border-radius: 15px
+ &Open
+  display: block
+ label
+  width: 100%
+ .Tags
+  display: flex
+  flex-wrap: wrap
+  background: rgb(239, 239, 239)
+  border-radius: 0 0 5px 5px
+  &-Hidden
+   display: none
+  &-Buttons
+   font-size: 16px
+   padding: 5px 15px
+   margin: 7px
+   border: none
+   background: #ffffff
+   display: flex
+   justify-content: center
+   align-items: center
+   position: relative
+   &:before
+    margin-right: 5px
+    content: ''
+    display: block
+    width: 15px
+    height: 15px
+    border: 1px solid #000000
+    border-radius: 3px
+   &-Selected
+    &:after
+     content: ''
+     left: 20px
+     display: block
+     position: absolute
+     height: 5px
+     width: 5px
+     background: #000000
+.Tags-Open
+ border-radius: 5px 5px 0 0
+.Button-Tags
+ display: flex
+ justify-content: center
+ align-items: center
+ margin-bottom: 0
+ >div
+  margin-left: 10px
+
+.Button-Submit,.Button-Cancel,.CreateCategoryButton
+ border: 0
+ border-radius: 5px
+ position: relative
+ background: $PC
+ padding: 10px 15px
+ color: #ffffff
+
+.CreateCategoryButton
+ margin-top: 25px
+
+.Popup-Delete
+ top: 50%
+ left: 50%
+ transform: translate(-50%,-50%)
+ height: 250px
+ display: none
+ flex-direction: column
+ justify-content: center
+ align-items: center
+.PopupDeleteOpen
+ display: flex
+.Buttons-Wrapper
+ margin-top: 75px
+ button
+  margin: 0 15px
+.Button-Cancel
+ background: gray

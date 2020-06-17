@@ -20,7 +20,7 @@ class CreatePosts extends React.Component {
   super(props);
   this.state = {
    title: null,
-   date: `${dat.getDate()}.${dat.getMonth()}`,
+   date: `${dat.getDate()}.${dat.getMonth()}.${dat.getFullYear()}`,
    content: null,
    tag: null,
    tags: null,
@@ -80,6 +80,10 @@ class CreatePosts extends React.Component {
         MySwal.fire({
          title: 'Обновновление успешно',
          icon: 'success',
+        }).then((result) => {
+         if (result.value) {
+          window.location.reload();
+         }
         });
        } else {
         MySwal.fire({

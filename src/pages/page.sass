@@ -7,10 +7,8 @@
  align-items: center
  .Creating-Post-Wrapper
   width: 23vw
- &-Tags
-  height: 100vh
- &-About
-  height: 100vh
+ .AdminPanel,&-Tags,&-About
+  min-height: 100vh
  &> div
   width: 100%
 .Section
@@ -38,3 +36,13 @@
  display: flex
  align-items: center
  justify-self: center
+.Background
+ &:before
+  content: ''
+  position: absolute
+  z-index: 2
+  top: 0
+  right: 0
+  left: 0
+  bottom: 0
+  background: rgba(0, 0, 0, 0.7)

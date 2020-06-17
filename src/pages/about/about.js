@@ -124,7 +124,7 @@ class About extends React.Component {
       </div>
      </div>
     </div>
-    <Footer />
+    {!!this.props.home ? '' : <Footer />}
    </div>
   );
  }

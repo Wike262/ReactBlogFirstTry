@@ -1,20 +1,26 @@
 {
   "files": {
-    "main.css": "/static/css/main.63d069cb.chunk.css",
-    "main.js": "/static/js/main.8e27d2af.chunk.js",
-    "main.js.map": "/static/js/main.8e27d2af.chunk.js.map",
-    "runtime~main.js": "/static/js/runtime~main.5687cc04.js",
-    "runtime~main.js.map": "/static/js/runtime~main.5687cc04.js.map",
-    "static/css/2.5dd73afd.chunk.css": "/static/css/2.5dd73afd.chunk.css",
-    "static/js/2.1ea0d9e1.chunk.js": "/static/js/2.1ea0d9e1.chunk.js",
-    "static/js/2.1ea0d9e1.chunk.js.map": "/static/js/2.1ea0d9e1.chunk.js.map",
+    "main.css": "/static/css/main.d97462e9.chunk.css",
+    "main.js": "/static/js/main.0b2f30ff.chunk.js",
+    "main.js.map": "/static/js/main.0b2f30ff.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.23ae2981.js",
+    "runtime-main.js.map": "/static/js/runtime-main.23ae2981.js.map",
+    "static/css/2.3d52fff0.chunk.css": "/static/css/2.3d52fff0.chunk.css",
+    "static/js/2.18d60b64.chunk.js": "/static/js/2.18d60b64.chunk.js",
+    "static/js/2.18d60b64.chunk.js.map": "/static/js/2.18d60b64.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.e4c964a52f02570706254fe50fa5ece0.js": "/precache-manifest.e4c964a52f02570706254fe50fa5ece0.js",
+    "precache-manifest.7d193a8aaeef70f2af6b7a5335abaaf4.js": "/precache-manifest.7d193a8aaeef70f2af6b7a5335abaaf4.js",
     "service-worker.js": "/service-worker.js",
-    "static/css/2.5dd73afd.chunk.css.map": "/static/css/2.5dd73afd.chunk.css.map",
-    "static/css/main.63d069cb.chunk.css.map": "/static/css/main.63d069cb.chunk.css.map",
-    "static/media/author.webp": "/static/media/author.38ab7064.webp",
-    "static/media/bg_1.webp": "/static/media/bg_1.aa657631.webp",
+    "static/css/2.3d52fff0.chunk.css.map": "/static/css/2.3d52fff0.chunk.css.map",
+    "static/css/main.d97462e9.chunk.css.map": "/static/css/main.d97462e9.chunk.css.map",
+    "static/js/2.18d60b64.chunk.js.LICENSE.txt": "/static/js/2.18d60b64.chunk.js.LICENSE.txt",
     "static/media/dotblog.png": "/static/media/dotblog.60a96567.png"
-  }
+  },
+  "entrypoints": [
+    "static/js/runtime-main.23ae2981.js",
+    "static/css/2.3d52fff0.chunk.css",
+    "static/js/2.18d60b64.chunk.js",
+    "static/css/main.d97462e9.chunk.css",
+    "static/js/main.0b2f30ff.chunk.js"
+  ]
 }

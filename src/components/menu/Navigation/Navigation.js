@@ -20,6 +20,7 @@ export default (props) => {
       mod={props.mod}
       count={links.count}
       tag={links.tag}
+      date={links.date}
      />
     ))}
    </ul>

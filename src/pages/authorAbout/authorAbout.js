@@ -28,7 +28,6 @@ export default (props) => {
     <div className='Profile-Description Description'>
      <p></p>
     </div>
-    <Social mod='about' />
    </div>
   </div>
  );

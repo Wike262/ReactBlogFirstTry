@@ -91,6 +91,20 @@ class LoginStatus extends React.Component {
   ) : (
    <div className='Account'>
     <div className='Account-Status Status'>
+     {this.state.role === 'author' || this.state.role === 'admin' ? (
+      <div className='Account-CreatePosts-Link Link'>
+       <Link to='/createpost'>Написать статью</Link>
+      </div>
+     ) : (
+      ''
+     )}
+     {this.state.role === 'admin' ? (
+      <div className='Account-LinkToAdmin Link'>
+       <Link to='/admin'>Администрирование</Link>
+      </div>
+     ) : (
+      ''
+     )}
      <div className='Account-Wrapper Wrapper'>
       <Link
        to={{
@@ -142,20 +156,6 @@ class LoginStatus extends React.Component {
       </div>
      </div>
     </div>
-    {this.state.role === 'admin' ? (
-     <div className='Account-LinkToAdmin Link'>
-      <Link to='/admin'>Администрирование</Link>
-     </div>
-    ) : (
-     ''
-    )}
-    {this.state.role === 'author' || this.state.role === 'admin' ? (
-     <div className='Account-CreatePosts-Link Link'>
-      <Link to='/createpost'>Написать статью</Link>
-     </div>
-    ) : (
-     ''
-    )}
    </div>
   );
  }

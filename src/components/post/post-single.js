@@ -63,7 +63,7 @@ class PostSingle extends React.Component {
     likes: 0,
     view: 0,
     comments: 0,
-    date: `${dat.getDate()}. ${dat.getMonth()}`,
+    date: `${dat.getDate()}. ${dat.getMonth()}.${dat.getFullYear()}`,
    };
   }
   var style;

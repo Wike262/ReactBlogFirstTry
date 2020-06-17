@@ -18,6 +18,7 @@ import Contact from './pages/contact/contact';
 import Single from './pages/single_post/single';
 import Admin from './pages/admin/admin';
 import CreatePost from './pages/createPost/createPost';
+import Arhive from './pages/archive/archive';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -42,6 +43,10 @@ ReactDOM.render(
      component={(props) => <AuthorAbout {...props} />}
     />
     <Route path={'/tag/:tag'} component={(props) => <Tag {...props} />} />
+    <Route
+     path={'/archive/:date'}
+     component={(props) => <Arhive {...props} />}
+    />
     <Route exact path='/tag' component={(props) => <Tags {...props} />} />
     <Route
      path={'/posts/:postID'}
